@@ -3,78 +3,97 @@ window.PASTA_CONTENT = {
     title: "Pasta Oner",
     subtitle: "Czech artist",
     nav: [
-      { id: "home", label: "Home", href: "index.html" },
-      { id: "works", label: "Selected Works", href: "works.html" },
-      { id: "exhibitions", label: "Exhibitions", href: "exhibitions.html" },
-      { id: "interview", label: "Interview", href: "interview.html" },
-      { id: "about", label: "About", href: "about.html" },
-      { id: "contact", label: "Contact", href: "contact.html" }
+      { id: "home", label: "Home", href: "index.html", hand: "assets/hand.png" },
+      { id: "works", label: "Artworks", href: "works.html", hand: "assets/handleftdown.png" },
+      { id: "exhibitions", label: "Exhibitions", href: "exhibitions.html", hand: "assets/hand.png" },
+      { id: "about", label: "About", href: "about.html", hand: "assets/handleftdown.png" },
+      { id: "contact", label: "Contact", href: "contact.html", hand: "assets/hand.png" }
     ],
     footerNote:
-      "Portfolio concept rebuilt from the public structure and text of pastaoner.cz, with the provided local assets used as restrained visual placeholders."
+      "Portfolio concept rebuilt from the public structure and text of pastaoner.cz, with the provided asset pack used as restrained visual support."
   },
   home: {
-    kicker: "Czech artist / editorial portfolio concept",
-    title: "A calmer, clearer portfolio for Pasta Oner.",
+    kicker: "Pasta Oner / Czech artist",
+    title: "A flatter portfolio built around the work, the exhibitions, and the artist.",
     copy:
-      "This revised direction turns the project into a real multi-page artist site: lighter, more structured, and much closer to an editorial gallery presentation than a dense one-page landing experience.",
+      "Pasta Oner is one of the most distinctive figures of the contemporary Czech visual scene. This revised direction keeps the site clean and direct, while still holding onto the pop-art and cartoon edge inside the work itself.",
+    note:
+      "Current works, editions, exhibition information, and press inquiries are handled directly. More material is available on request.",
     links: [
       {
-        title: "Selected Works",
+        index: "01",
+        title: "Artworks",
         href: "works.html",
-        text: "A clean work archive with dates, venues, and source links."
+        text: "Available pieces, recent series, and direct purchase inquiries."
       },
       {
+        index: "02",
         title: "Exhibitions",
         href: "exhibitions.html",
-        text: "Solo, group, and public-space timelines organized into separate blocks."
+        text: "Current exhibition focus, recent previews, and a hidden past archive."
       },
       {
-        title: "Interview",
-        href: "interview.html",
-        text: "The long source interview distilled into readable thematic essays."
-      },
-      {
-        title: "About & Contact",
+        index: "03",
+        title: "About",
         href: "about.html",
-        text: "Biography, practice, and direct inquiry paths without visual clutter."
+        text: "Biography, practice, and a route into the long-form interview."
+      },
+      {
+        index: "04",
+        title: "Contact",
+        href: "contact.html",
+        text: "Sales, exhibitions, collaborations, and social channels."
       }
-    ],
-    quote:
-      "I would rather speak from inside the culture we live in than pretend to stand above it.",
-    featuredWorkIndexes: [0, 1, 2]
+    ]
+  },
+  currentExhibition: {
+    title: "Usual Suspect",
+    venue: "Letiště Praha",
+    dates: "4. 2. - 30. 4. 2026",
+    image: "assets/currentexibit.jpg",
+    alt: "Usual Suspect poster for Pasta Oner at Letiště Praha",
+    blurb:
+      "The supplied poster is now the visual anchor of the landing page and the exhibition section. It gives the site a clear current focus without filling the interface with too many floating images.",
+    note:
+      "For availability, exhibition information, and related works from this period, contact the artist directly."
   },
   pages: {
     works: {
-      kicker: "Selected Works",
-      title: "A focused archive of exhibitions and projects.",
+      kicker: "Artworks",
+      title: "Available works and recent series.",
       copy:
-        "The source site's work list has been reorganized into a cleaner archive format. One visual anchor leads the page, and the rest reads more like a portfolio index than a stack of repeated image cards."
+        "The artworks page now reads as a clean availability list rather than a stack of repeated cards. Current pieces, related works, and editions can be discussed directly with the artist."
     },
     exhibitions: {
       kicker: "Exhibitions",
-      title: "A clearer view of the exhibition history.",
+      title: "Current exhibition focus, recent previews, and a hidden archive.",
       copy:
-        "The original material is preserved, but now separated into collections, solo exhibitions, group exhibitions, and public-space work for easier scanning."
+        "Featured exhibitions can be opened for more visuals and context, while the broader exhibition history stays available in a cleaner hidden archive below."
     },
     interview: {
       kicker: "Interview",
       title: "Themes from a long-form conversation.",
       copy:
-        "Instead of hiding the interview inside a single endless page, the core ideas are grouped into editorial themes that can be read quickly and traced back to the original source."
+        "The interview stays as its own reading page, but the layout is quieter now: one image, one lead quote, and a sequence of themes instead of stacked popups."
     },
     about: {
       kicker: "About",
-      title: "Biography and practice.",
+      title: "Biography, practice, and context.",
       copy:
-        "The bilingual biography remains intact, but is now placed inside a more spacious, gallery-like layout with less visual noise."
+        "The biography stays bilingual and detailed, but the layout is flatter and less boxed in. The interview now sits here as a clear secondary path."
     },
     contact: {
       kicker: "Contact",
-      title: "Direct and minimal contact information.",
+      title: "Direct contact for works, exhibitions, and collaborations.",
       copy:
-        "This page keeps the inquiry paths simple: email, production phone, social links, and the legal information preserved from the source site."
+        "This page keeps everything simple: email, phone, social links, and the source legal note preserved from the original site."
     }
+  },
+  interviewTeaser: {
+    title: "Interview",
+    text:
+      "A longer conversation about graffiti, post-pop culture, old masters, pressure, branding, and how Pasta Oner positions himself inside contemporary visual culture.",
+    href: "interview.html"
   },
   practicePoints: [
     "Works across acrylic painting, objects, sculpture, installations, and graphic output.",
@@ -108,6 +127,96 @@ window.PASTA_CONTENT = {
       "Provozovatel eshopu: Emerging Art a.s., IČ: 17076757"
     ]
   },
+  artworks: {
+    note:
+      "Current pieces, editions, and related works are available by direct inquiry. More artworks are available than the short list shown here.",
+    items: [
+      {
+        year: "2026",
+        title: "Usual Suspect",
+        medium: "Current exhibition body of work",
+        status: "Purchase inquiry",
+        note:
+          "The newest body of work on the site. Availability and related pieces are discussed directly with the artist.",
+        ctaLabel: "Purchase inquiry",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Usual%20Suspect"
+      },
+      {
+        year: "2025",
+        title: "Ermitage",
+        medium: "Painting and installation project",
+        status: "Available on request",
+        note:
+          "Recent works from the 2025 program can be discussed privately, including related pieces and exhibition material.",
+        ctaLabel: "Ask about availability",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Ermitage"
+      },
+      {
+        year: "2024",
+        title: "Holy Grail",
+        medium: "Painting series",
+        status: "Inquiry",
+        note:
+          "Selected works and connected material can be requested directly from the studio.",
+        ctaLabel: "Request details",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Holy%20Grail"
+      },
+      {
+        year: "2023",
+        title: "The Gilded Age",
+        medium: "Painting series",
+        status: "Inquiry",
+        note:
+          "For availability and additional artworks beyond the site, contact the artist directly.",
+        ctaLabel: "Contact for works",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20The%20Gilded%20Age"
+      }
+    ]
+  },
+  featuredExhibitions: [
+    {
+      status: "Current",
+      title: "Usual Suspect",
+      venue: "Letiště Praha",
+      dates: "4. 2. - 30. 4. 2026",
+      excerpt:
+        "The supplied poster now leads the site and gives the current exhibition a clear place in the structure. The supporting images stay tucked inside the expandable panel.",
+      gallery: [
+        { src: "assets/currentexibit.jpg", alt: "Usual Suspect poster" },
+        { src: "assets/exibit.png", alt: "Exhibition placeholder view" }
+      ],
+      linkLabel: "Ask about this exhibition",
+      linkHref: "contact.html"
+    },
+    {
+      status: "Recent",
+      title: "Ermitage",
+      venue: "Obecní dům, Prague",
+      dates: "17. 9. - 31. 12. 2025",
+      excerpt:
+        "One of the most recent documented exhibitions from the crawled archive. The expanded view keeps the page tidy while still giving room for extra visuals.",
+      gallery: [
+        { src: "assets/exibit.png", alt: "Exhibition placeholder photo" },
+        { src: "assets/passingphotohorizontal1.png", alt: "Exhibition visual element" }
+      ],
+      linkLabel: "Open source page",
+      linkHref: "https://www.pastaoner.cz/ermitage"
+    },
+    {
+      status: "Recent",
+      title: "Holy Grail",
+      venue: "Hauch Gallery, Prague",
+      dates: "24. 5. - 15. 6. 2024",
+      excerpt:
+        "A second featured preview keeps the exhibition page useful without turning it into a large poster wall.",
+      gallery: [
+        { src: "assets/exibit.png", alt: "Holy Grail exhibition placeholder" },
+        { src: "assets/passingphotohorizontal2.png", alt: "Holy Grail visual element" }
+      ],
+      linkLabel: "Open source page",
+      linkHref: "https://www.pastaoner.cz/holy-grail"
+    }
+  ],
   collections: [
     "Sbírka Galerie Golf Hostivař",
     "Sbírka COLLETT Prague / Munich",
@@ -120,127 +229,6 @@ window.PASTA_CONTENT = {
     "Sbírka Miroslava Kubíka",
     "Sbírka Leona Tzoukernika",
     "Sbírka Museum Kampa"
-  ],
-  selectedWorks: [
-    {
-      title: "Ermitage",
-      venue: "Obecní dům, Prague",
-      dates: "17. 9. - 31. 12. 2025",
-      year: 2025,
-      sourceUrl: "https://www.pastaoner.cz/ermitage"
-    },
-    {
-      title: "Holy Grail",
-      venue: "Hauch Gallery, Prague",
-      dates: "24. 5. - 15. 6. 2024",
-      year: 2024,
-      sourceUrl: "https://www.pastaoner.cz/holy-grail"
-    },
-    {
-      title: "The Gilded Age",
-      venue: "Oblastní Galerie Liberec",
-      dates: "2. 6. - 1. 10. 2023",
-      year: 2023,
-      sourceUrl: "https://www.pastaoner.cz/the-gilded-age"
-    },
-    {
-      title: "Eternal Beauty",
-      venue: "Galerie 1, Prague",
-      dates: "2. 6. - 2. 7. 2022",
-      year: 2022,
-      sourceUrl: "https://www.pastaoner.cz/eternal-beauty"
-    },
-    {
-      title: "20th Century Cabinet",
-      venue: "Galerie Villa Pellé, Prague",
-      dates: "8. 6. - 25. 7. 2021",
-      year: 2021,
-      sourceUrl: "https://www.pastaoner.cz/20th-century-cabinet"
-    },
-    {
-      title: "HalfTime",
-      venue: "Galerie Ludvíka Kuby, Poděbrady",
-      dates: "6. 3. - 30. 6. 2021",
-      year: 2021,
-      sourceUrl: "https://www.pastaoner.cz/halftime"
-    },
-    {
-      title: "Alfons Mucha & Pasta Oner: Elusive Fusion",
-      venue: "Museum Kampa, Prague",
-      dates: "23. 6. - 25. 10. 2020",
-      year: 2020,
-      sourceUrl: "https://www.pastaoner.cz/kampa"
-    },
-    {
-      title: "Aftermath",
-      venue: "Galerie UFFO, Trutnov",
-      dates: "1. 9. - 6. 10. 2020",
-      year: 2020,
-      sourceUrl: "https://www.pastaoner.cz/aftermath"
-    },
-    {
-      title: "Naughty by Nature",
-      venue: "Dům umění v Opavě",
-      dates: "19. 5. - 2. 8. 2020",
-      year: 2020,
-      sourceUrl: "https://www.pastaoner.cz/selected-works"
-    },
-    {
-      title: "The Brotherhood of Eternal Love",
-      venue: "Danubiana Meulensteen Art Museum, Bratislava",
-      dates: "24. 1. - 29. 3. 2020",
-      year: 2020,
-      sourceUrl: "https://www.pastaoner.cz/love"
-    },
-    {
-      title: "Pasta Oner",
-      venue: "Aleš South Bohemian Gallery",
-      dates: "9. 6. - 6. 10. 2019",
-      year: 2019,
-      sourceUrl: "https://www.pastaoner.cz/pastaoner"
-    },
-    {
-      title: "Art is Truth",
-      venue: "DSC Gallery, Prague",
-      dates: "5. 10. - 9. 11. 2017",
-      year: 2017,
-      sourceUrl: "https://www.pastaoner.cz/artistruth"
-    },
-    {
-      title: "Near to Heaven",
-      venue: "White Pearl Gallery, Prague",
-      dates: "15. 11. - 20. 11. 2016",
-      year: 2016,
-      sourceUrl: "https://www.pastaoner.cz/neartoheaven"
-    },
-    {
-      title: "Reverse",
-      venue: "DSC Gallery, Prague",
-      dates: "21. 7. - 30. 8. 2016",
-      year: 2016,
-      sourceUrl: "https://www.pastaoner.cz/reverse"
-    },
-    {
-      title: "Golden Boys",
-      venue: "Nová Síň Gallery, Prague",
-      dates: "5. 5. - 25. 5. 2016",
-      year: 2016,
-      sourceUrl: "https://www.pastaoner.cz/goldenboys"
-    },
-    {
-      title: "Last Day in Paradise",
-      venue: "Mánes Gallery, Prague",
-      dates: "11. 11. - 23. 11. 2015",
-      year: 2015,
-      sourceUrl: "https://www.pastaoner.cz/lastdayinparadise"
-    },
-    {
-      title: "Man on Fire",
-      venue: "The Chemistry Gallery, Prague",
-      dates: "29. 11. 2013 - 11. 1. 2014",
-      year: 2013,
-      sourceUrl: "https://www.pastaoner.cz/manonfire"
-    }
   ],
   exhibitions: {
     solo: [

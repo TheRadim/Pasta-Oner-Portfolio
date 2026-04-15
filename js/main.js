@@ -3,11 +3,32 @@
   const pageId = document.body.dataset.page;
 
   function escapeHtml(value) {
-    return value
+    return String(value)
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;");
+  }
+
+  function setText(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) element.textContent = value;
+  }
+
+  function isExternalLink(href) {
+    return /^(https?:)?\/\//.test(href);
+  }
+
+  function linkAttrs(href) {
+    return isExternalLink(href) ? ' target="_blank" rel="noreferrer noopener"' : "";
+  }
+
+  function buildLink(href, label, className = "text-link") {
+    return `<a class="${className}" href="${href}"${linkAttrs(href)}>${escapeHtml(label)}</a>`;
+  }
+
+  function isActiveNavItem(itemId) {
+    return itemId === pageId || (pageId === "interview" && itemId === "about");
   }
 
   function renderSiteNav() {
@@ -15,12 +36,19 @@
     if (!navRoot) return;
 
     navRoot.innerHTML = content.site.nav
-      .map((item) => {
-        const activeClass = item.id === pageId ? " active" : "";
-        const current = item.id === pageId ? ' aria-current="page"' : "";
+      .map((item, index) => {
+        const activeClass = isActiveNavItem(item.id) ? " active" : "";
+        const current = isActiveNavItem(item.id) ? ' aria-current="page"' : "";
+        const handClass = index % 2 === 0 ? "" : " nav-link__hand--alt";
+
         return `
           <li class="nav-item">
-            <a class="nav-link${activeClass}" href="${item.href}"${current}>${item.label}</a>
+            <a class="nav-link${activeClass}" href="${item.href}"${current}>
+              <span class="nav-link__label">${escapeHtml(item.label)}</span>
+              <span class="nav-link__hand${handClass}" aria-hidden="true">
+                <img src="${item.hand}" alt="">
+              </span>
+            </a>
           </li>
         `;
       })
@@ -33,13 +61,10 @@
 
     footer.innerHTML = `
       <div class="site-footer__inner">
-        <p>${content.site.footerNote}</p>
+        <p>${escapeHtml(content.site.footerNote)}</p>
         <div class="site-footer__links">
           ${content.contact.social
-            .map(
-              (item) =>
-                `<a href="${item.href}" target="_blank" rel="noreferrer noopener">${item.label}</a>`
-            )
+            .map((item) => buildLink(item.href, item.label))
             .join("")}
         </div>
       </div>
@@ -47,77 +72,59 @@
   }
 
   function renderHomePage() {
-    document.querySelector("[data-home-kicker]").textContent = content.home.kicker;
-    document.querySelector("[data-home-title]").textContent = content.home.title;
-    document.querySelector("[data-home-copy]").textContent = content.home.copy;
-    document.querySelector("[data-home-quote]").textContent = content.home.quote;
+    if (!document.querySelector("[data-home-title]")) return;
+
+    setText("[data-home-kicker]", content.home.kicker);
+    setText("[data-home-title]", content.home.title);
+    setText("[data-home-copy]", content.home.copy);
+    setText("[data-home-note]", content.home.note);
+    setText("[data-home-current-title]", content.currentExhibition.title);
+    setText("[data-home-current-dates]", content.currentExhibition.dates);
+    setText("[data-home-current-venue]", content.currentExhibition.venue);
+    setText("[data-home-current-copy]", content.currentExhibition.blurb);
 
     const links = document.querySelector("[data-home-links]");
+    if (!links) return;
+
     links.innerHTML = content.home.links
       .map(
         (item) => `
-          <div class="col-md-6">
-            <a class="page-link-card page-frame" href="${item.href}">
-              <span class="page-link-card__label">Section</span>
-              <h3 class="page-link-card__title">${item.title}</h3>
-              <p class="page-link-card__text">${item.text}</p>
-            </a>
-          </div>
-        `
-      )
-      .join("");
-
-    const works = document.querySelector("[data-home-works]");
-    works.innerHTML = content.home.featuredWorkIndexes
-      .map((index) => content.selectedWorks[index])
-      .map(
-        (work) => `
-          <article class="compact-work">
-            <div class="compact-work__year">${work.year}</div>
-            <div class="compact-work__body">
-              <h3>${work.title}</h3>
-              <p>${work.venue}</p>
-              <p>${work.dates}</p>
-            </div>
-          </article>
+          <a class="section-link" href="${item.href}">
+            <span class="section-link__index">${escapeHtml(item.index)}</span>
+            <h2 class="section-link__title">${escapeHtml(item.title)}</h2>
+            <p class="section-link__text">${escapeHtml(item.text)}</p>
+            <span class="section-link__arrow">Open</span>
+          </a>
         `
       )
       .join("");
   }
 
   function renderWorksPage() {
+    if (!document.querySelector("[data-works-title]")) return;
+
     const page = content.pages.works;
-    document.querySelector("[data-works-kicker]").textContent = page.kicker;
-    document.querySelector("[data-works-title]").textContent = page.title;
-    document.querySelector("[data-works-copy]").textContent = page.copy;
+    setText("[data-works-kicker]", page.kicker);
+    setText("[data-works-title]", page.title);
+    setText("[data-works-copy]", page.copy);
+    setText("[data-artworks-note]", content.artworks.note);
 
-    const feature = document.querySelector("[data-works-feature]");
-    const latest = content.selectedWorks[0];
-    feature.innerHTML = `
-      <div class="feature-frame__label">Current lead</div>
-      <div class="feature-frame__content">
-        <div>
-          <h2 class="section-title">${latest.title}</h2>
-          <p class="body-copy">${latest.venue}</p>
-          <p class="body-copy body-copy--muted">${latest.dates}</p>
-        </div>
-        <a class="text-link" href="${latest.sourceUrl}" target="_blank" rel="noreferrer noopener">Open source page</a>
-      </div>
-    `;
+    const list = document.querySelector("[data-artworks-list]");
+    if (!list) return;
 
-    const list = document.querySelector("[data-works-list]");
-    list.innerHTML = content.selectedWorks
+    list.innerHTML = content.artworks.items
       .map(
-        (work) => `
-          <article class="archive-row">
-            <div class="archive-row__year">${work.year}</div>
-            <div class="archive-row__main">
-              <h3>${work.title}</h3>
-              <p>${work.venue}</p>
+        (item) => `
+          <article class="artwork-item">
+            <div class="artwork-item__year">${escapeHtml(item.year)}</div>
+            <div class="artwork-item__main">
+              <h2 class="artwork-item__title">${escapeHtml(item.title)}</h2>
+              <p class="artwork-item__medium">${escapeHtml(item.medium)}</p>
+              <p class="artwork-item__note">${escapeHtml(item.note)}</p>
             </div>
-            <div class="archive-row__dates">${work.dates}</div>
-            <div class="archive-row__link">
-              <a href="${work.sourceUrl}" target="_blank" rel="noreferrer noopener">Source</a>
+            <div class="artwork-item__side">
+              <span class="status-pill">${escapeHtml(item.status)}</span>
+              ${buildLink(item.ctaHref, item.ctaLabel)}
             </div>
           </article>
         `
@@ -126,11 +133,13 @@
   }
 
   function renderTimeline(target, groups) {
+    if (!target) return;
+
     target.innerHTML = groups
       .map(
         (group) => `
           <section class="timeline-group">
-            <h3 class="timeline-group__year">${group.year}</h3>
+            <h3 class="timeline-group__year">${escapeHtml(group.year)}</h3>
             <ul class="timeline-group__items">
               ${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
             </ul>
@@ -141,14 +150,59 @@
   }
 
   function renderExhibitionsPage() {
-    const page = content.pages.exhibitions;
-    document.querySelector("[data-exhibitions-kicker]").textContent = page.kicker;
-    document.querySelector("[data-exhibitions-title]").textContent = page.title;
-    document.querySelector("[data-exhibitions-copy]").textContent = page.copy;
+    if (!document.querySelector("[data-exhibitions-title]")) return;
 
-    document.querySelector("[data-collections-list]").innerHTML = content.collections
-      .map((item) => `<li>${item}</li>`)
-      .join("");
+    const page = content.pages.exhibitions;
+    setText("[data-exhibitions-kicker]", page.kicker);
+    setText("[data-exhibitions-title]", page.title);
+    setText("[data-exhibitions-copy]", page.copy);
+    setText("[data-exhibitions-current-title]", content.currentExhibition.title);
+    setText("[data-exhibitions-current-dates]", content.currentExhibition.dates);
+    setText("[data-exhibitions-current-venue]", content.currentExhibition.venue);
+    setText("[data-exhibitions-current-note]", content.currentExhibition.note);
+
+    const featured = document.querySelector("[data-exhibitions-featured]");
+    if (featured) {
+      featured.innerHTML = content.featuredExhibitions
+        .map(
+          (item, index) => `
+            <details class="exhibition-item"${index === 0 ? " open" : ""}>
+              <summary class="exhibition-item__summary">
+                <span class="exhibition-item__status">${escapeHtml(item.status)}</span>
+                <div class="exhibition-item__headline">
+                  <h2 class="exhibition-item__title">${escapeHtml(item.title)}</h2>
+                  <p>${escapeHtml(item.venue)}</p>
+                  <p>${escapeHtml(item.dates)}</p>
+                </div>
+                <span class="exhibition-item__toggle">View details</span>
+              </summary>
+              <div class="exhibition-item__body">
+                <p class="body-copy body-copy--compact">${escapeHtml(item.excerpt)}</p>
+                <div class="exhibition-gallery">
+                  ${item.gallery
+                    .map(
+                      (image) => `
+                        <figure class="exhibition-gallery__item">
+                          <img src="${image.src}" alt="${escapeHtml(image.alt)}">
+                        </figure>
+                      `
+                    )
+                    .join("")}
+                </div>
+                ${buildLink(item.linkHref, item.linkLabel)}
+              </div>
+            </details>
+          `
+        )
+        .join("");
+    }
+
+    const collections = document.querySelector("[data-collections-list]");
+    if (collections) {
+      collections.innerHTML = content.collections
+        .map((item) => `<li>${escapeHtml(item)}</li>`)
+        .join("");
+    }
 
     renderTimeline(document.querySelector("[data-solo-list]"), content.exhibitions.solo);
     renderTimeline(document.querySelector("[data-group-list]"), content.exhibitions.group);
@@ -156,20 +210,27 @@
   }
 
   function renderInterviewPage() {
-    const page = content.pages.interview;
-    document.querySelector("[data-interview-kicker]").textContent = page.kicker;
-    document.querySelector("[data-interview-title]").textContent = page.title;
-    document.querySelector("[data-interview-copy]").textContent = page.copy;
-    document.querySelector("[data-interview-quote]").textContent = content.interview.leadQuote;
+    if (!document.querySelector("[data-interview-title]")) return;
 
-    document.querySelector("[data-interview-list]").innerHTML = content.interview.themes
+    const page = content.pages.interview;
+    setText("[data-interview-kicker]", page.kicker);
+    setText("[data-interview-title]", page.title);
+    setText("[data-interview-copy]", page.copy);
+    setText("[data-interview-quote]", content.interview.leadQuote);
+
+    const list = document.querySelector("[data-interview-list]");
+    if (!list) return;
+
+    list.innerHTML = content.interview.themes
       .map(
         (theme) => `
-          <article class="essay-card page-frame">
-            <span class="essay-card__kicker">${theme.kicker}</span>
-            <h2 class="essay-card__title">${theme.title}</h2>
-            <p class="body-copy">${theme.excerpt}</p>
-            ${theme.detail.map((paragraph) => `<p class="body-copy body-copy--muted">${paragraph}</p>`).join("")}
+          <article class="essay-section">
+            <span class="essay-section__kicker">${escapeHtml(theme.kicker)}</span>
+            <h2 class="essay-section__title">${escapeHtml(theme.title)}</h2>
+            <p class="body-copy">${escapeHtml(theme.excerpt)}</p>
+            ${theme.detail
+              .map((paragraph) => `<p class="body-copy body-copy--muted">${escapeHtml(paragraph)}</p>`)
+              .join("")}
           </article>
         `
       )
@@ -183,7 +244,7 @@
 
     title.textContent = content.about.title;
     copy.innerHTML = content.about[language]
-      .map((paragraph) => `<p>${paragraph}</p>`)
+      .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
       .join("");
 
     document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
@@ -192,56 +253,67 @@
   }
 
   function renderAboutPage() {
+    if (!document.querySelector("[data-about-title]")) return;
+
     const page = content.pages.about;
-    document.querySelector("[data-about-kicker]").textContent = page.kicker;
-    document.querySelector("[data-about-title]").textContent = page.title;
-    document.querySelector("[data-about-copy]").textContent = page.copy;
+    setText("[data-about-kicker]", page.kicker);
+    setText("[data-about-title]", page.title);
+    setText("[data-about-copy]", page.copy);
+    setText("[data-about-interview-title]", content.interviewTeaser.title);
+    setText("[data-about-interview-copy]", content.interviewTeaser.text);
     renderBio("cs");
 
-    document.querySelector("[data-about-points]").innerHTML = content.practicePoints
-      .map(
-        (point) => `
-          <article class="practice-item">
-            <p>${point}</p>
-          </article>
-        `
-      )
-      .join("");
+    const list = document.querySelector("[data-about-points]");
+    if (list) {
+      list.innerHTML = content.practicePoints
+        .map(
+          (point) => `
+            <article class="practice-item">
+              <p>${escapeHtml(point)}</p>
+            </article>
+          `
+        )
+        .join("");
+    }
   }
 
   function renderContactPage() {
+    if (!document.querySelector("[data-contact-title]")) return;
+
     const page = content.pages.contact;
-    document.querySelector("[data-contact-kicker]").textContent = page.kicker;
-    document.querySelector("[data-contact-title]").textContent = page.title;
-    document.querySelector("[data-contact-copy]").textContent = page.copy;
+    setText("[data-contact-kicker]", page.kicker);
+    setText("[data-contact-title]", page.title);
+    setText("[data-contact-copy]", page.copy);
 
-    document.querySelector("[data-contact-primary]").innerHTML = `
-      <span class="section-kicker">Primary</span>
-      <h2 class="section-title">Inquiries</h2>
-      <p class="body-copy"><a href="mailto:${content.contact.email}">${content.contact.email}</a></p>
-      <p class="body-copy"><a href="${content.contact.phoneHref}">${content.contact.phoneDisplay}</a></p>
-    `;
+    const primary = document.querySelector("[data-contact-primary]");
+    if (primary) {
+      primary.innerHTML = `
+        <span class="section-kicker">Primary</span>
+        <h2 class="info-block__title">Email & phone</h2>
+        <p>${buildLink(`mailto:${content.contact.email}`, content.contact.email, "info-link")}</p>
+        <p>${buildLink(content.contact.phoneHref, content.contact.phoneDisplay, "info-link")}</p>
+      `;
+    }
 
-    document.querySelector("[data-contact-social]").innerHTML = `
-      <span class="section-kicker">Social</span>
-      <h2 class="section-title">Channels</h2>
-      <div class="stack-links">
-        ${content.contact.social
-          .map(
-            (item) =>
-              `<a href="${item.href}" target="_blank" rel="noreferrer noopener">${item.label}</a>`
-          )
-          .join("")}
-      </div>
-    `;
+    const social = document.querySelector("[data-contact-social]");
+    if (social) {
+      social.innerHTML = `
+        <span class="section-kicker">Social</span>
+        <h2 class="info-block__title">Facebook & Instagram</h2>
+        <div class="stack-links">
+          ${content.contact.social.map((item) => buildLink(item.href, item.label, "info-link")).join("")}
+        </div>
+      `;
+    }
 
-    document.querySelector("[data-contact-legal]").innerHTML = `
-      <span class="section-kicker">Legal</span>
-      <h2 class="section-title">Source note</h2>
-      <div class="body-copy body-copy--muted">
-        ${content.contact.legal.map((line) => `<p>${line}</p>`).join("")}
-      </div>
-    `;
+    const legal = document.querySelector("[data-contact-legal]");
+    if (legal) {
+      legal.innerHTML = `
+        <span class="section-kicker">Source note</span>
+        <h2 class="info-block__title">Preserved legal information</h2>
+        ${content.contact.legal.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
+      `;
+    }
   }
 
   function setupLanguageSwitch() {
@@ -251,12 +323,12 @@
   }
 
   function initPage() {
-    if (pageId === "home") renderHomePage();
-    if (pageId === "works") renderWorksPage();
-    if (pageId === "exhibitions") renderExhibitionsPage();
-    if (pageId === "interview") renderInterviewPage();
-    if (pageId === "about") renderAboutPage();
-    if (pageId === "contact") renderContactPage();
+    renderHomePage();
+    renderWorksPage();
+    renderExhibitionsPage();
+    renderInterviewPage();
+    renderAboutPage();
+    renderContactPage();
   }
 
   renderSiteNav();

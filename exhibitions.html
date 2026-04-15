@@ -6,7 +6,7 @@
   <title>Pasta Oner | Exhibitions</title>
   <meta
     name="description"
-    content="Exhibition history for Pasta Oner, organized as a cleaner multi-section archive."
+    content="Current exhibition focus, recent previews, and a hidden exhibition archive for Pasta Oner."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,52 +49,60 @@
     </header>
 
     <main class="page-main">
-      <section class="page-hero page-frame">
-        <div class="row g-5 align-items-center">
-          <div class="col-lg-6">
-            <span class="section-kicker" data-exhibitions-kicker></span>
-            <h1 class="display-title" data-exhibitions-title></h1>
-            <p class="lead-copy" data-exhibitions-copy></p>
-          </div>
-          <div class="col-lg-6">
-            <div class="media-frame media-frame--exhibition">
-              <img src="assets/exibit.png" alt="Exhibition placeholder">
-            </div>
+      <section class="page-intro section-line">
+        <div>
+          <span class="section-kicker" data-exhibitions-kicker></span>
+          <h1 class="display-title" data-exhibitions-title></h1>
+          <p class="lead-copy" data-exhibitions-copy></p>
+          <div class="inline-actions">
+            <span class="status-pill">Current exhibition</span>
+            <span class="meta-line" data-exhibitions-current-dates></span>
           </div>
         </div>
+        <aside class="poster-panel">
+          <div class="poster-panel__image">
+            <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
+          </div>
+          <div class="poster-panel__meta">
+            <h2 class="section-title section-title--compact" data-exhibitions-current-title></h2>
+            <p class="meta-line" data-exhibitions-current-venue></p>
+            <p class="body-copy body-copy--compact" data-exhibitions-current-note></p>
+          </div>
+        </aside>
       </section>
 
-      <section class="page-section">
-        <div class="page-frame collections-frame">
-          <div class="collections-frame__intro">
-            <span class="section-kicker">Collections</span>
-            <h2 class="section-title">Selected collections from the source archive.</h2>
-          </div>
-          <ul class="collections-list" data-collections-list></ul>
+      <section class="section-line">
+        <div class="section-heading">
+          <span class="section-kicker">Featured exhibitions</span>
+          <h2 class="section-title">Open each exhibition for more visuals and context.</h2>
         </div>
+        <div class="exhibitions-stack" data-exhibitions-featured></div>
       </section>
 
-      <section class="page-section">
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <div class="timeline-frame page-frame">
-              <span class="section-kicker">Solo</span>
-              <div data-solo-list></div>
+      <section class="section-line">
+        <details class="archive-toggle">
+          <summary>Open full exhibition archive</summary>
+          <div class="archive-toggle__content">
+            <div>
+              <span class="section-kicker">Collections</span>
+              <ul class="collections-list" data-collections-list></ul>
+            </div>
+            <div class="archive-columns">
+              <section class="timeline-panel">
+                <span class="section-kicker">Solo</span>
+                <div data-solo-list></div>
+              </section>
+              <section class="timeline-panel">
+                <span class="section-kicker">Group</span>
+                <div data-group-list></div>
+              </section>
+              <section class="timeline-panel">
+                <span class="section-kicker">Public space</span>
+                <div data-public-list></div>
+              </section>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="timeline-frame page-frame">
-              <span class="section-kicker">Group</span>
-              <div data-group-list></div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="timeline-frame page-frame">
-              <span class="section-kicker">Public Space</span>
-              <div data-public-list></div>
-            </div>
-          </div>
-        </div>
+        </details>
       </section>
     </main>
 
