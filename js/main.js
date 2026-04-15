@@ -1,39 +1,6 @@
 (function () {
   const content = window.PASTA_CONTENT;
-
-  const navList = document.querySelector("[data-nav-list]");
-  const heroEyebrow = document.querySelector("[data-hero-eyebrow]");
-  const heroTitle = document.querySelector("[data-hero-title]");
-  const heroCopy = document.querySelector("[data-hero-copy]");
-  const heroStats = document.querySelector("[data-hero-stats]");
-  const collectionsStrip = document.querySelector("[data-collections-strip]");
-  const collectionsList = document.querySelector("[data-collections-list]");
-  const worksGrid = document.querySelector("[data-works-grid]");
-  const interviewGrid = document.querySelector("[data-interview-grid]");
-  const interviewIntro = document.querySelector("[data-interview-intro]");
-  const bioTitle = document.querySelector("[data-bio-title]");
-  const bioCopy = document.querySelector("[data-bio-copy]");
-  const contactCopy = document.querySelector("[data-contact-copy]");
-  const contactEmail = document.querySelector("[data-contact-email]");
-  const contactPhone = document.querySelector("[data-contact-phone]");
-  const socialLinks = document.querySelector("[data-social-links]");
-  const soloList = document.querySelector("[data-solo-list]");
-  const groupList = document.querySelector("[data-group-list]");
-  const publicList = document.querySelector("[data-public-list]");
-  const preview = document.querySelector("[data-menu-preview]");
-  const previewImage = preview?.querySelector(".menu-preview__image");
-  const previewLabel = preview?.querySelector(".menu-preview__label");
-  const previewEyebrow = preview?.querySelector(".menu-preview__eyebrow");
-  const modalElement = document.getElementById("detailModal");
-  const modal = modalElement ? new bootstrap.Modal(modalElement) : null;
-
-  const modalKicker = modalElement?.querySelector("[data-modal-kicker]");
-  const modalTitle = modalElement?.querySelector("[data-modal-title]");
-  const modalMedia = modalElement?.querySelector("[data-modal-media]");
-  const modalCopy = modalElement?.querySelector("[data-modal-copy]");
-  const modalLink = modalElement?.querySelector("[data-modal-link]");
-
-  let activeLanguage = "cs";
+  const pageId = document.body.dataset.page;
 
   function escapeHtml(value) {
     return value
@@ -43,74 +10,116 @@
       .replaceAll('"', "&quot;");
   }
 
-  function renderNavigation() {
-    navList.innerHTML = content.menu
+  function renderSiteNav() {
+    const navRoot = document.querySelector("[data-site-nav]");
+    if (!navRoot) return;
+
+    navRoot.innerHTML = content.site.nav
+      .map((item) => {
+        const activeClass = item.id === pageId ? " active" : "";
+        const current = item.id === pageId ? ' aria-current="page"' : "";
+        return `
+          <li class="nav-item">
+            <a class="nav-link${activeClass}" href="${item.href}"${current}>${item.label}</a>
+          </li>
+        `;
+      })
+      .join("");
+  }
+
+  function renderFooter() {
+    const footer = document.querySelector("[data-site-footer]");
+    if (!footer) return;
+
+    footer.innerHTML = `
+      <div class="site-footer__inner">
+        <p>${content.site.footerNote}</p>
+        <div class="site-footer__links">
+          ${content.contact.social
+            .map(
+              (item) =>
+                `<a href="${item.href}" target="_blank" rel="noreferrer noopener">${item.label}</a>`
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderHomePage() {
+    document.querySelector("[data-home-kicker]").textContent = content.home.kicker;
+    document.querySelector("[data-home-title]").textContent = content.home.title;
+    document.querySelector("[data-home-copy]").textContent = content.home.copy;
+    document.querySelector("[data-home-quote]").textContent = content.home.quote;
+
+    const links = document.querySelector("[data-home-links]");
+    links.innerHTML = content.home.links
       .map(
         (item) => `
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="${item.href}"
-              data-preview-image="${item.preview}"
-              data-preview-label="${escapeHtml(item.label)}"
-            >${item.label}</a>
-          </li>
+          <div class="col-md-6">
+            <a class="page-link-card page-frame" href="${item.href}">
+              <span class="page-link-card__label">Section</span>
+              <h3 class="page-link-card__title">${item.title}</h3>
+              <p class="page-link-card__text">${item.text}</p>
+            </a>
+          </div>
         `
       )
       .join("");
-  }
 
-  function renderHero() {
-    heroEyebrow.textContent = content.hero.eyebrow;
-    heroTitle.textContent = content.hero.title;
-    heroCopy.textContent = content.hero.copy;
-    heroStats.innerHTML = content.hero.stats
+    const works = document.querySelector("[data-home-works]");
+    works.innerHTML = content.home.featuredWorkIndexes
+      .map((index) => content.selectedWorks[index])
       .map(
-        (stat) => `
-          <div class="col-sm-4">
-            <div class="stat-card">
-              <span class="stat-card__value">${stat.value}</span>
-              <span class="stat-card__label">${stat.label}</span>
+        (work) => `
+          <article class="compact-work">
+            <div class="compact-work__year">${work.year}</div>
+            <div class="compact-work__body">
+              <h3>${work.title}</h3>
+              <p>${work.venue}</p>
+              <p>${work.dates}</p>
             </div>
-          </div>
+          </article>
         `
       )
       .join("");
   }
 
-  function renderCollections() {
-    const stripItems = [...content.collections, ...content.collections]
-      .map((collection) => `<span class="collections-strip__item">${collection}</span>`)
-      .join("");
-    collectionsStrip.innerHTML = stripItems;
+  function renderWorksPage() {
+    const page = content.pages.works;
+    document.querySelector("[data-works-kicker]").textContent = page.kicker;
+    document.querySelector("[data-works-title]").textContent = page.title;
+    document.querySelector("[data-works-copy]").textContent = page.copy;
 
-    collectionsList.innerHTML = content.collections
-      .map((collection) => `<li>${collection}</li>`)
-      .join("");
-  }
+    const feature = document.querySelector("[data-works-feature]");
+    const latest = content.selectedWorks[0];
+    feature.innerHTML = `
+      <div class="feature-frame__label">Current lead</div>
+      <div class="feature-frame__content">
+        <div>
+          <h2 class="section-title">${latest.title}</h2>
+          <p class="body-copy">${latest.venue}</p>
+          <p class="body-copy body-copy--muted">${latest.dates}</p>
+        </div>
+        <a class="text-link" href="${latest.sourceUrl}" target="_blank" rel="noreferrer noopener">Open source page</a>
+      </div>
+    `;
 
-  function renderWorks() {
-    worksGrid.innerHTML = content.selectedWorks
+    const list = document.querySelector("[data-works-list]");
+    list.innerHTML = content.selectedWorks
       .map(
-        (work, index) => `
-          <div class="col-md-6 col-xl-4">
-            <article class="work-card">
-              <div class="pop-panel">
-                <button class="work-card__button" type="button" data-detail-type="work" data-detail-index="${index}">
-                  <div class="work-card__media">
-                    <img src="${work.image}" alt="${escapeHtml(work.title)}">
-                    <span class="work-card__badge">selected work</span>
-                    <img class="work-card__sticker" src="${work.sticker}" alt="">
-                  </div>
-                  <div class="work-card__content">
-                    <div class="work-card__meta">${work.year} / source crawl</div>
-                    <h3 class="work-card__title">${work.title}</h3>
-                    <p class="work-card__venue">${work.venue}<br>${work.dates}</p>
-                  </div>
-                </button>
-              </div>
-            </article>
-          </div>
+        (work) => `
+          <article class="archive-row">
+            <div class="archive-row__year">${work.year}</div>
+            <div class="archive-row__main">
+              <h3>${work.title}</h3>
+              <p>${work.venue}</p>
+            </div>
+            <div class="archive-row__dates">${work.dates}</div>
+            <div class="archive-row__link">
+              <a href="${work.sourceUrl}" target="_blank" rel="noreferrer noopener">Source</a>
+            </div>
+          </article>
         `
       )
       .join("");
@@ -123,7 +132,7 @@
           <section class="timeline-group">
             <h3 class="timeline-group__year">${group.year}</h3>
             <ul class="timeline-group__items">
-              ${group.items.map((item) => `<li>${item}</li>`).join("")}
+              ${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
             </ul>
           </section>
         `
@@ -131,31 +140,49 @@
       .join("");
   }
 
-  function renderInterview() {
-    interviewIntro.textContent = content.interview.intro;
-    interviewGrid.innerHTML = content.interview.themes
+  function renderExhibitionsPage() {
+    const page = content.pages.exhibitions;
+    document.querySelector("[data-exhibitions-kicker]").textContent = page.kicker;
+    document.querySelector("[data-exhibitions-title]").textContent = page.title;
+    document.querySelector("[data-exhibitions-copy]").textContent = page.copy;
+
+    document.querySelector("[data-collections-list]").innerHTML = content.collections
+      .map((item) => `<li>${item}</li>`)
+      .join("");
+
+    renderTimeline(document.querySelector("[data-solo-list]"), content.exhibitions.solo);
+    renderTimeline(document.querySelector("[data-group-list]"), content.exhibitions.group);
+    renderTimeline(document.querySelector("[data-public-list]"), content.exhibitions.publicSpace);
+  }
+
+  function renderInterviewPage() {
+    const page = content.pages.interview;
+    document.querySelector("[data-interview-kicker]").textContent = page.kicker;
+    document.querySelector("[data-interview-title]").textContent = page.title;
+    document.querySelector("[data-interview-copy]").textContent = page.copy;
+    document.querySelector("[data-interview-quote]").textContent = content.interview.leadQuote;
+
+    document.querySelector("[data-interview-list]").innerHTML = content.interview.themes
       .map(
-        (theme, index) => `
-          <div class="col-md-6 col-xl-4">
-            <article class="interview-card">
-              <button class="interview-card__button" type="button" data-detail-type="theme" data-detail-index="${index}">
-                <div class="interview-card__surface pop-panel">
-                  <span class="eyebrow eyebrow--small">${theme.kicker}</span>
-                  <h3 class="interview-card__title">${theme.title}</h3>
-                  <p class="interview-card__excerpt">${theme.excerpt}</p>
-                </div>
-              </button>
-            </article>
-          </div>
+        (theme) => `
+          <article class="essay-card page-frame">
+            <span class="essay-card__kicker">${theme.kicker}</span>
+            <h2 class="essay-card__title">${theme.title}</h2>
+            <p class="body-copy">${theme.excerpt}</p>
+            ${theme.detail.map((paragraph) => `<p class="body-copy body-copy--muted">${paragraph}</p>`).join("")}
+          </article>
         `
       )
       .join("");
   }
 
   function renderBio(language) {
-    activeLanguage = language;
-    bioTitle.textContent = content.about.title;
-    bioCopy.innerHTML = content.about[language]
+    const title = document.querySelector("[data-bio-title]");
+    const copy = document.querySelector("[data-bio-copy]");
+    if (!title || !copy) return;
+
+    title.textContent = content.about.title;
+    copy.innerHTML = content.about[language]
       .map((paragraph) => `<p>${paragraph}</p>`)
       .join("");
 
@@ -164,73 +191,57 @@
     });
   }
 
-  function renderContact() {
-    contactCopy.textContent = content.contact.copy;
-    contactEmail.href = `mailto:${content.contact.email}`;
-    contactEmail.textContent = content.contact.email;
-    contactPhone.href = content.contact.phoneHref;
-    contactPhone.textContent = content.contact.phoneDisplay;
-    socialLinks.innerHTML = content.contact.social
+  function renderAboutPage() {
+    const page = content.pages.about;
+    document.querySelector("[data-about-kicker]").textContent = page.kicker;
+    document.querySelector("[data-about-title]").textContent = page.title;
+    document.querySelector("[data-about-copy]").textContent = page.copy;
+    renderBio("cs");
+
+    document.querySelector("[data-about-points]").innerHTML = content.practicePoints
       .map(
-        (item) => `
-          <li>
-            <a href="${item.href}" target="_blank" rel="noreferrer noopener">${item.label}</a>
-          </li>
+        (point) => `
+          <article class="practice-item">
+            <p>${point}</p>
+          </article>
         `
       )
       .join("");
   }
 
-  function openWorkModal(index) {
-    const work = content.selectedWorks[index];
-    modalKicker.textContent = `Selected work / ${work.year}`;
-    modalTitle.textContent = work.title;
-    modalMedia.innerHTML = `<img src="${work.image}" alt="${escapeHtml(work.title)}">`;
-    modalCopy.innerHTML = `
-      <p><strong>Venue:</strong> ${work.venue}</p>
-      <p><strong>Dates:</strong> ${work.dates}</p>
-      <p>
-        This card uses the local <code>art.jpeg</code> image as a placeholder while the final
-        project gathers a dedicated image set for each series or exhibition.
-      </p>
+  function renderContactPage() {
+    const page = content.pages.contact;
+    document.querySelector("[data-contact-kicker]").textContent = page.kicker;
+    document.querySelector("[data-contact-title]").textContent = page.title;
+    document.querySelector("[data-contact-copy]").textContent = page.copy;
+
+    document.querySelector("[data-contact-primary]").innerHTML = `
+      <span class="section-kicker">Primary</span>
+      <h2 class="section-title">Inquiries</h2>
+      <p class="body-copy"><a href="mailto:${content.contact.email}">${content.contact.email}</a></p>
+      <p class="body-copy"><a href="${content.contact.phoneHref}">${content.contact.phoneDisplay}</a></p>
     `;
-    modalLink.href = work.sourceUrl;
-    modalLink.textContent = "Open source page";
-    modal.show();
-  }
 
-  function openThemeModal(index) {
-    const theme = content.interview.themes[index];
-    modalKicker.textContent = theme.kicker;
-    modalTitle.textContent = theme.title;
-    modalMedia.innerHTML = `<img src="${theme.image}" alt="">`;
-    modalCopy.innerHTML = [
-      `<p>${theme.excerpt}</p>`,
-      ...theme.detail.map((paragraph) => `<p>${paragraph}</p>`)
-    ].join("");
-    modalLink.href = theme.sourceUrl;
-    modalLink.textContent = "Open original interview";
-    modal.show();
-  }
+    document.querySelector("[data-contact-social]").innerHTML = `
+      <span class="section-kicker">Social</span>
+      <h2 class="section-title">Channels</h2>
+      <div class="stack-links">
+        ${content.contact.social
+          .map(
+            (item) =>
+              `<a href="${item.href}" target="_blank" rel="noreferrer noopener">${item.label}</a>`
+          )
+          .join("")}
+      </div>
+    `;
 
-  function setupDetailTriggers() {
-    document.addEventListener("click", (event) => {
-      const trigger = event.target.closest("[data-detail-type]");
-      if (!trigger) return;
-
-      const index = Number(trigger.dataset.detailIndex);
-      const type = trigger.dataset.detailType;
-
-      if (Number.isNaN(index) || !modal) return;
-
-      if (type === "work") {
-        openWorkModal(index);
-      }
-
-      if (type === "theme") {
-        openThemeModal(index);
-      }
-    });
+    document.querySelector("[data-contact-legal]").innerHTML = `
+      <span class="section-kicker">Legal</span>
+      <h2 class="section-title">Source note</h2>
+      <div class="body-copy body-copy--muted">
+        ${content.contact.legal.map((line) => `<p>${line}</p>`).join("")}
+      </div>
+    `;
   }
 
   function setupLanguageSwitch() {
@@ -239,71 +250,17 @@
     });
   }
 
-  function setupMenuPreview() {
-    if (!preview) return;
-
-    document.querySelectorAll("[data-preview-image]").forEach((link) => {
-      const activate = () => {
-        preview.classList.remove("is-muted");
-        previewImage.src = link.dataset.previewImage;
-        previewLabel.textContent = link.dataset.previewLabel;
-        previewEyebrow.textContent = "Menu preview";
-      };
-
-      const deactivate = () => {
-        preview.classList.add("is-muted");
-        previewImage.src = "assets/egg.png";
-        previewLabel.textContent = content.meta.artist;
-        previewEyebrow.textContent = "Hover signal";
-      };
-
-      link.addEventListener("mouseenter", activate);
-      link.addEventListener("focus", activate);
-      link.addEventListener("mouseleave", deactivate);
-      link.addEventListener("blur", deactivate);
-    });
+  function initPage() {
+    if (pageId === "home") renderHomePage();
+    if (pageId === "works") renderWorksPage();
+    if (pageId === "exhibitions") renderExhibitionsPage();
+    if (pageId === "interview") renderInterviewPage();
+    if (pageId === "about") renderAboutPage();
+    if (pageId === "contact") renderContactPage();
   }
 
-  function setupHeroParallax() {
-    const root = document.querySelector("[data-parallax-root]");
-    if (!root) return;
-
-    const elements = root.querySelectorAll("[data-depth]");
-
-    root.addEventListener("pointermove", (event) => {
-      const bounds = root.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-
-      elements.forEach((element) => {
-        const depth = Number(element.dataset.depth) || 0;
-        element.style.transform = `translate(${x * depth}px, ${y * depth}px)`;
-      });
-    });
-
-    root.addEventListener("pointerleave", () => {
-      elements.forEach((element) => {
-        element.style.transform = "";
-      });
-    });
-  }
-
-  function init() {
-    renderNavigation();
-    renderHero();
-    renderCollections();
-    renderWorks();
-    renderTimeline(soloList, content.exhibitions.solo);
-    renderTimeline(groupList, content.exhibitions.group);
-    renderTimeline(publicList, content.exhibitions.publicSpace);
-    renderInterview();
-    renderBio(activeLanguage);
-    renderContact();
-    setupDetailTriggers();
-    setupLanguageSwitch();
-    setupMenuPreview();
-    setupHeroParallax();
-  }
-
-  init();
+  renderSiteNav();
+  renderFooter();
+  initPage();
+  setupLanguageSwitch();
 })();

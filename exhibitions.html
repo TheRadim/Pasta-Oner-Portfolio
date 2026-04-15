@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pasta Oner | Home</title>
+  <title>Pasta Oner | Exhibitions</title>
   <meta
     name="description"
-    content="A clean multi-page portfolio concept for Czech artist Pasta Oner, built from the original site structure and content."
+    content="Exhibition history for Pasta Oner, organized as a cleaner multi-section archive."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
   >
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-page="home">
+<body data-page="exhibitions">
   <div class="site-shell">
     <header class="site-header">
       <nav class="navbar navbar-expand-xl">
@@ -52,51 +52,48 @@
       <section class="page-hero page-frame">
         <div class="row g-5 align-items-center">
           <div class="col-lg-6">
-            <span class="section-kicker" data-home-kicker></span>
-            <h1 class="display-title" data-home-title></h1>
-            <p class="lead-copy" data-home-copy></p>
-            <div class="hero-actions">
-              <a class="button-link button-link--filled" href="works.html">Selected Works</a>
-              <a class="button-link" href="exhibitions.html">Exhibitions</a>
-            </div>
+            <span class="section-kicker" data-exhibitions-kicker></span>
+            <h1 class="display-title" data-exhibitions-title></h1>
+            <p class="lead-copy" data-exhibitions-copy></p>
           </div>
           <div class="col-lg-6">
-            <div class="media-frame media-frame--hero">
-              <img src="assets/pasta_portrait.png" alt="Pasta Oner portrait">
+            <div class="media-frame media-frame--exhibition">
+              <img src="assets/exibit.png" alt="Exhibition placeholder">
             </div>
           </div>
         </div>
       </section>
 
       <section class="page-section">
-        <div class="section-heading">
-          <span class="section-kicker">Portfolio Map</span>
-          <h2 class="section-title">Separate pages, clearer pacing, more breathing room.</h2>
-        </div>
-        <div class="row g-4" data-home-links></div>
-      </section>
-
-      <section class="page-section">
-        <div class="page-frame split-frame">
-          <div class="split-frame__intro">
-            <span class="section-kicker">Recent Focus</span>
-            <h2 class="section-title">Selected works are now presented as an archive, not a visual overload.</h2>
-            <p class="body-copy">
-              Instead of repeating decorative images and layered stickers, the site now uses one
-              calm visual anchor and a text-forward archive that feels closer to an exhibition
-              listing or artist index.
-            </p>
-            <a class="text-link" href="works.html">Browse works</a>
+        <div class="page-frame collections-frame">
+          <div class="collections-frame__intro">
+            <span class="section-kicker">Collections</span>
+            <h2 class="section-title">Selected collections from the source archive.</h2>
           </div>
-          <div class="split-frame__content" data-home-works></div>
+          <ul class="collections-list" data-collections-list></ul>
         </div>
       </section>
 
       <section class="page-section">
-        <div class="page-frame quote-frame">
-          <div class="quote-frame__label">Interview highlight</div>
-          <p class="quote-frame__quote" data-home-quote></p>
-          <a class="text-link" href="interview.html">Read interview themes</a>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="timeline-frame page-frame">
+              <span class="section-kicker">Solo</span>
+              <div data-solo-list></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="timeline-frame page-frame">
+              <span class="section-kicker">Group</span>
+              <div data-group-list></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="timeline-frame page-frame">
+              <span class="section-kicker">Public Space</span>
+              <div data-public-list></div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

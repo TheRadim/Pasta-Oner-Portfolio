@@ -1,40 +1,85 @@
 window.PASTA_CONTENT = {
-  meta: {
-    artist: "Pasta Oner",
-    role: "Czech artist",
-    crawlDate: "2026-04-15",
-    sourceSite: "https://www.pastaoner.cz/",
-    sourcePages: [
-      "https://www.pastaoner.cz/",
-      "https://www.pastaoner.cz/selected-works",
-      "https://www.pastaoner.cz/exhibitions",
-      "https://www.pastaoner.cz/about",
-      "https://www.pastaoner.cz/interview-219",
-      "https://www.pastaoner.cz/contact"
-    ]
-  },
-  menu: [
-    { label: "Home", href: "#home", preview: "assets/pasta_portrait.png" },
-    { label: "Selected Works", href: "#works", preview: "assets/handleftdown.png" },
-    { label: "Exhibitions", href: "#exhibitions", preview: "assets/egg.png" },
-    { label: "Interview", href: "#interview", preview: "assets/passingphotohorizontal.png" },
-    { label: "About", href: "#about", preview: "assets/davidstatue.png" },
-    { label: "Contact", href: "#contact", preview: "assets/hand.png" }
-  ],
-  hero: {
-    eyebrow: "Czech artist / crawl-informed concept",
+  site: {
     title: "Pasta Oner",
-    copy:
-      "A modern, responsive portfolio direction that pulls the original site into one clearer experience: selected works, exhibitions, interview themes, biography, and contact details, all reframed with a cleaner pop-art and cartoon energy.",
-    stats: [
-      { value: "17", label: "selected works captured" },
-      { value: "20+", label: "years of exhibitions and public projects" },
-      { value: "6", label: "core content streams unified" }
-    ]
+    subtitle: "Czech artist",
+    nav: [
+      { id: "home", label: "Home", href: "index.html" },
+      { id: "works", label: "Selected Works", href: "works.html" },
+      { id: "exhibitions", label: "Exhibitions", href: "exhibitions.html" },
+      { id: "interview", label: "Interview", href: "interview.html" },
+      { id: "about", label: "About", href: "about.html" },
+      { id: "contact", label: "Contact", href: "contact.html" }
+    ],
+    footerNote:
+      "Portfolio concept rebuilt from the public structure and text of pastaoner.cz, with the provided local assets used as restrained visual placeholders."
   },
-  homeSummary: [
-    "One of the most prominent voices in the Czech visual art scene, Pasta Oner combines pop-art and cartoon aesthetics with contemporary cultural critique.",
-    "The work moves between acrylic painting, objects, sculpture, installations, and other media-rich forms of storytelling."
+  home: {
+    kicker: "Czech artist / editorial portfolio concept",
+    title: "A calmer, clearer portfolio for Pasta Oner.",
+    copy:
+      "This revised direction turns the project into a real multi-page artist site: lighter, more structured, and much closer to an editorial gallery presentation than a dense one-page landing experience.",
+    links: [
+      {
+        title: "Selected Works",
+        href: "works.html",
+        text: "A clean work archive with dates, venues, and source links."
+      },
+      {
+        title: "Exhibitions",
+        href: "exhibitions.html",
+        text: "Solo, group, and public-space timelines organized into separate blocks."
+      },
+      {
+        title: "Interview",
+        href: "interview.html",
+        text: "The long source interview distilled into readable thematic essays."
+      },
+      {
+        title: "About & Contact",
+        href: "about.html",
+        text: "Biography, practice, and direct inquiry paths without visual clutter."
+      }
+    ],
+    quote:
+      "I would rather speak from inside the culture we live in than pretend to stand above it.",
+    featuredWorkIndexes: [0, 1, 2]
+  },
+  pages: {
+    works: {
+      kicker: "Selected Works",
+      title: "A focused archive of exhibitions and projects.",
+      copy:
+        "The source site's work list has been reorganized into a cleaner archive format. One visual anchor leads the page, and the rest reads more like a portfolio index than a stack of repeated image cards."
+    },
+    exhibitions: {
+      kicker: "Exhibitions",
+      title: "A clearer view of the exhibition history.",
+      copy:
+        "The original material is preserved, but now separated into collections, solo exhibitions, group exhibitions, and public-space work for easier scanning."
+    },
+    interview: {
+      kicker: "Interview",
+      title: "Themes from a long-form conversation.",
+      copy:
+        "Instead of hiding the interview inside a single endless page, the core ideas are grouped into editorial themes that can be read quickly and traced back to the original source."
+    },
+    about: {
+      kicker: "About",
+      title: "Biography and practice.",
+      copy:
+        "The bilingual biography remains intact, but is now placed inside a more spacious, gallery-like layout with less visual noise."
+    },
+    contact: {
+      kicker: "Contact",
+      title: "Direct and minimal contact information.",
+      copy:
+        "This page keeps the inquiry paths simple: email, production phone, social links, and the legal information preserved from the source site."
+    }
+  },
+  practicePoints: [
+    "Works across acrylic painting, objects, sculpture, installations, and graphic output.",
+    "Builds a visual language where pop-art and cartoon aesthetics meet historical references and spiritual motifs.",
+    "Keeps contemporary culture, desire, irony, and recognisable symbols in active dialogue."
   ],
   about: {
     title: "Pasta Oner (1979)",
@@ -50,14 +95,17 @@ window.PASTA_CONTENT = {
     ]
   },
   contact: {
-    copy:
-      "For current offers of works, the original website directs inquiries to production by phone or to Pasta Oner directly by email. Social channels and legal shop information are also preserved from the source site.",
     email: "pasta@pastaoner.cz",
     phoneDisplay: "+420 606 732 264",
     phoneHref: "tel:+420606732264",
     social: [
       { label: "Facebook", href: "https://www.facebook.com/PASTAONERfanpage" },
       { label: "Instagram", href: "https://www.instagram.com/pastaoner/?hl=cs" }
+    ],
+    legal: [
+      "Obchodní podmínky eshopu",
+      "GDPR",
+      "Provozovatel eshopu: Emerging Art a.s., IČ: 17076757"
     ]
   },
   collections: [
@@ -79,8 +127,6 @@ window.PASTA_CONTENT = {
       venue: "Obecní dům, Prague",
       dates: "17. 9. - 31. 12. 2025",
       year: 2025,
-      image: "assets/art.jpeg",
-      sticker: "assets/handleftdown.png",
       sourceUrl: "https://www.pastaoner.cz/ermitage"
     },
     {
@@ -88,8 +134,6 @@ window.PASTA_CONTENT = {
       venue: "Hauch Gallery, Prague",
       dates: "24. 5. - 15. 6. 2024",
       year: 2024,
-      image: "assets/art.jpeg",
-      sticker: "assets/hand.png",
       sourceUrl: "https://www.pastaoner.cz/holy-grail"
     },
     {
@@ -97,8 +141,6 @@ window.PASTA_CONTENT = {
       venue: "Oblastní Galerie Liberec",
       dates: "2. 6. - 1. 10. 2023",
       year: 2023,
-      image: "assets/art.jpeg",
-      sticker: "assets/passingphotohorizontal1.png",
       sourceUrl: "https://www.pastaoner.cz/the-gilded-age"
     },
     {
@@ -106,8 +148,6 @@ window.PASTA_CONTENT = {
       venue: "Galerie 1, Prague",
       dates: "2. 6. - 2. 7. 2022",
       year: 2022,
-      image: "assets/art.jpeg",
-      sticker: "assets/egg.png",
       sourceUrl: "https://www.pastaoner.cz/eternal-beauty"
     },
     {
@@ -115,8 +155,6 @@ window.PASTA_CONTENT = {
       venue: "Galerie Villa Pellé, Prague",
       dates: "8. 6. - 25. 7. 2021",
       year: 2021,
-      image: "assets/art.jpeg",
-      sticker: "assets/davidstatue.png",
       sourceUrl: "https://www.pastaoner.cz/20th-century-cabinet"
     },
     {
@@ -124,8 +162,6 @@ window.PASTA_CONTENT = {
       venue: "Galerie Ludvíka Kuby, Poděbrady",
       dates: "6. 3. - 30. 6. 2021",
       year: 2021,
-      image: "assets/art.jpeg",
-      sticker: "assets/pourimagevertical.png",
       sourceUrl: "https://www.pastaoner.cz/halftime"
     },
     {
@@ -133,8 +169,6 @@ window.PASTA_CONTENT = {
       venue: "Museum Kampa, Prague",
       dates: "23. 6. - 25. 10. 2020",
       year: 2020,
-      image: "assets/art.jpeg",
-      sticker: "assets/handleftdown.png",
       sourceUrl: "https://www.pastaoner.cz/kampa"
     },
     {
@@ -142,8 +176,6 @@ window.PASTA_CONTENT = {
       venue: "Galerie UFFO, Trutnov",
       dates: "1. 9. - 6. 10. 2020",
       year: 2020,
-      image: "assets/art.jpeg",
-      sticker: "assets/hand.png",
       sourceUrl: "https://www.pastaoner.cz/aftermath"
     },
     {
@@ -151,8 +183,6 @@ window.PASTA_CONTENT = {
       venue: "Dům umění v Opavě",
       dates: "19. 5. - 2. 8. 2020",
       year: 2020,
-      image: "assets/art.jpeg",
-      sticker: "assets/passingphotohorizontal2.png",
       sourceUrl: "https://www.pastaoner.cz/selected-works"
     },
     {
@@ -160,8 +190,6 @@ window.PASTA_CONTENT = {
       venue: "Danubiana Meulensteen Art Museum, Bratislava",
       dates: "24. 1. - 29. 3. 2020",
       year: 2020,
-      image: "assets/art.jpeg",
-      sticker: "assets/egg.png",
       sourceUrl: "https://www.pastaoner.cz/love"
     },
     {
@@ -169,8 +197,6 @@ window.PASTA_CONTENT = {
       venue: "Aleš South Bohemian Gallery",
       dates: "9. 6. - 6. 10. 2019",
       year: 2019,
-      image: "assets/art.jpeg",
-      sticker: "assets/davidstatue.png",
       sourceUrl: "https://www.pastaoner.cz/pastaoner"
     },
     {
@@ -178,8 +204,6 @@ window.PASTA_CONTENT = {
       venue: "DSC Gallery, Prague",
       dates: "5. 10. - 9. 11. 2017",
       year: 2017,
-      image: "assets/art.jpeg",
-      sticker: "assets/pourimagevertical.png",
       sourceUrl: "https://www.pastaoner.cz/artistruth"
     },
     {
@@ -187,8 +211,6 @@ window.PASTA_CONTENT = {
       venue: "White Pearl Gallery, Prague",
       dates: "15. 11. - 20. 11. 2016",
       year: 2016,
-      image: "assets/art.jpeg",
-      sticker: "assets/handleftdown.png",
       sourceUrl: "https://www.pastaoner.cz/neartoheaven"
     },
     {
@@ -196,8 +218,6 @@ window.PASTA_CONTENT = {
       venue: "DSC Gallery, Prague",
       dates: "21. 7. - 30. 8. 2016",
       year: 2016,
-      image: "assets/art.jpeg",
-      sticker: "assets/hand.png",
       sourceUrl: "https://www.pastaoner.cz/reverse"
     },
     {
@@ -205,8 +225,6 @@ window.PASTA_CONTENT = {
       venue: "Nová Síň Gallery, Prague",
       dates: "5. 5. - 25. 5. 2016",
       year: 2016,
-      image: "assets/art.jpeg",
-      sticker: "assets/passingphotohorizontal1.png",
       sourceUrl: "https://www.pastaoner.cz/goldenboys"
     },
     {
@@ -214,8 +232,6 @@ window.PASTA_CONTENT = {
       venue: "Mánes Gallery, Prague",
       dates: "11. 11. - 23. 11. 2015",
       year: 2015,
-      image: "assets/art.jpeg",
-      sticker: "assets/egg.png",
       sourceUrl: "https://www.pastaoner.cz/lastdayinparadise"
     },
     {
@@ -223,17 +239,12 @@ window.PASTA_CONTENT = {
       venue: "The Chemistry Gallery, Prague",
       dates: "29. 11. 2013 - 11. 1. 2014",
       year: 2013,
-      image: "assets/art.jpeg",
-      sticker: "assets/davidstatue.png",
       sourceUrl: "https://www.pastaoner.cz/manonfire"
     }
   ],
   exhibitions: {
     solo: [
-      {
-        year: 2025,
-        items: ["Ermitage - Obecní dům, Prague"]
-      },
+      { year: 2025, items: ["Ermitage - Obecní dům, Prague"] },
       {
         year: 2024,
         items: [
@@ -242,14 +253,8 @@ window.PASTA_CONTENT = {
           "Happy Meal - Sin Studio Gallery, Marbella, Spain"
         ]
       },
-      {
-        year: 2023,
-        items: ["The Gilded Age - Oblastní Galerie Liberec"]
-      },
-      {
-        year: 2022,
-        items: ["Eternal Beauty - Galerie 1, Prague"]
-      },
+      { year: 2023, items: ["The Gilded Age - Oblastní Galerie Liberec"] },
+      { year: 2022, items: ["Eternal Beauty - Galerie 1, Prague"] },
       {
         year: 2021,
         items: [
@@ -273,10 +278,7 @@ window.PASTA_CONTENT = {
           "Plan B - Galerie Magna, Ostrava"
         ]
       },
-      {
-        year: 2017,
-        items: ["Art is Truth - DSC Gallery, Prague"]
-      },
+      { year: 2017, items: ["Art is Truth - DSC Gallery, Prague"] },
       {
         year: 2016,
         items: [
@@ -284,10 +286,7 @@ window.PASTA_CONTENT = {
           "Near To Heaven - White Pearl Gallery, Prague"
         ]
       },
-      {
-        year: 2015,
-        items: ["Last Day in Paradise - Mánes Gallery, Prague"]
-      },
+      { year: 2015, items: ["Last Day in Paradise - Mánes Gallery, Prague"] },
       {
         year: 2013,
         items: [
@@ -295,10 +294,7 @@ window.PASTA_CONTENT = {
           "Recall - Gallery of Art (GAVU), Cheb"
         ]
       },
-      {
-        year: 2011,
-        items: ["Peep show - The Chemistry Gallery, Prague"]
-      }
+      { year: 2011, items: ["Peep show - The Chemistry Gallery, Prague"] }
     ],
     group: [
       { year: 2024, items: ["Heavy Weights - DSC Gallery, Prague"] },
@@ -368,70 +364,6 @@ window.PASTA_CONTENT = {
           "Boutique - The Chemistry Gallery, Prague",
           "Metropolis - Candy Shop, DOX Centre for Contemporary Art, Prague"
         ]
-      },
-      {
-        year: 2010,
-        items: [
-          "Art Prague 2010 - exposition of the Chemistry Gallery, Mánes Gallery, Prague",
-          "Metropolis - Czech Republic Pavilion, World Expo 2010, Shanghai, China",
-          "Corners - Source Gallery, World Expo 2010, Shanghai, China"
-        ]
-      },
-      {
-        year: 2009,
-        items: [
-          "NA.PRO.TI.TO.MU. - The Chemistry Gallery, Prague",
-          "Štěpánská street art - Galerie 35 - Institut Français, Prague",
-          "City Art Fest - Nitra, Slovakia",
-          "Storage - The Chemistry Gallery, Prague",
-          "Help Me God I'm Jesus! - Trafo Gallery, Prague"
-        ]
-      },
-      {
-        year: 2008,
-        items: [
-          "Tina B - Dukelských hrdinů 28, Prague",
-          "Names Festival Prague - Hall C, Prague",
-          "Mystic Sk8 Cup - Subculture - Skatepark Štvanice, Prague",
-          "City Celebrities - Moravian Gallery, Brno"
-        ]
-      },
-      {
-        year: 2007,
-        items: [
-          "Laktace - Nábřeží Gallery, Prague",
-          "Street Art Prague - Školská Gallery, Prague",
-          "Mystic Sk8 Cup - Subculture - Skatepark Štvanice, Prague",
-          "Trafačka aréna - Trafo Gallery, Prague"
-        ]
-      },
-      {
-        year: 2006,
-        items: ["No Discount - Nábřeží Gallery, Prague"]
-      },
-      {
-        year: 2005,
-        items: [
-          "European Street - La galerie du moment, Brussels, Belgium",
-          "European Street - Nábřeží Gallery, Prague"
-        ]
-      },
-      {
-        year: 2004,
-        items: [
-          "Infiltrace '04 - Regional Art Gallery in Liberec, Liberec",
-          "Whatever we got, we work with - Nábřeží Gallery, Prague"
-        ]
-      },
-      {
-        year: 2003,
-        items: [
-          "Raped Subconscious - Dejvická metro station, Prague",
-          "St.ill needs you! - Nábřeží Gallery, Prague",
-          "NextWave - NoD Art Gallery, Prague",
-          "Czech-in - Transpublic Gallery, Linz, Austria",
-          "City needs you! - Ateliér1, Prague"
-        ]
       }
     ],
     publicSpace: [
@@ -468,46 +400,36 @@ window.PASTA_CONTENT = {
           "Society Killed The Teenager - created in conjunction with the 2012 Literature Night, Smíchov, Prague"
         ]
       },
-      {
-        year: 2011,
-        items: ["I Will Not Do The Dirty Bird - DOX Centre for Contemporary Art, Prague"]
-      }
+      { year: 2011, items: ["I Will Not Do The Dirty Bird - DOX Centre for Contemporary Art, Prague"] }
     ]
   },
   interview: {
-    intro:
-      "The original interview is long, rich, and idea-heavy. For the redesign, the strongest recurring themes are surfaced as cards that open into longer excerpts.",
-    sourceUrl: "https://www.pastaoner.cz/interview-219",
+    leadQuote:
+      "Rather than claiming moral distance from consumer culture, he prefers to speak from inside that condition and use irony, reflection, and recognizable desire as material.",
     themes: [
       {
-        title: "From graffiti to gallery work",
         kicker: "Theme 01",
-        image: "assets/passingphotohorizontal2.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "From graffiti to gallery work",
         excerpt:
           "Pasta Oner describes graffiti as a foundational period that taught discipline, total commitment, and a relationship to the city, while also making clear that his current studio and gallery practice has moved elsewhere.",
         detail: [
           "He talks openly about how the media still frames him through his street and graffiti past because the story is attractive and easy to retell, even though his active connection to that scene ended long ago.",
-          "That tension leaves him 'somewhere in between': no longer part of graffiti culture in an active sense, but never fully embraced by the academic art track either."
+          "That tension leaves him somewhere in between: no longer part of graffiti culture in an active sense, but never fully embraced by the academic art track either."
         ]
       },
       {
-        title: "Post-pop culture, not just postmodernism",
         kicker: "Theme 02",
-        image: "assets/pourimagevertical.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "Post-pop culture, not just postmodernism",
         excerpt:
-          "Instead of calling the work simply postmodern, he prefers the phrase 'post-pop culture' because the imagery pulls from everything that fascinates him across decades of consumer symbols, art history, and visual language.",
+          "Instead of calling the work simply postmodern, he prefers the phrase post-pop culture because the imagery pulls from everything that fascinates him across decades of consumer symbols, art history, and visual language.",
         detail: [
           "In the interview he connects this to contemporary urban icons such as delivery brands and other everyday symbols that become just as culturally charged as older pop references.",
           "That position keeps the work open, playful, and visually direct without reducing it to nostalgia."
         ]
       },
       {
-        title: "Art as intelligent entertainment",
         kicker: "Theme 03",
-        image: "assets/hand.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "Art as intelligent entertainment",
         excerpt:
           "He argues that contemporary art should still be allowed to function as intelligent entertainment: emotionally legible, visually attractive, and capable of giving people relief instead of speaking only inward to art-world specialists.",
         detail: [
@@ -516,10 +438,8 @@ window.PASTA_CONTENT = {
         ]
       },
       {
-        title: "Living inside the system",
         kicker: "Theme 04",
-        image: "assets/middlefingerrightup.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "Living inside the system",
         excerpt:
           "Rather than claiming moral distance from consumer culture and capitalism, he prefers to speak from inside that condition and use irony, reflection, and recognizable desire as material.",
         detail: [
@@ -528,10 +448,8 @@ window.PASTA_CONTENT = {
         ]
       },
       {
-        title: "Old masters, collage, and spirituality",
         kicker: "Theme 05",
-        image: "assets/davidstatue.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "Old masters, collage, and spirituality",
         excerpt:
           "A major shift in the paintings came from encountering old masters in museums and realizing that fragments of historical painting could be pulled into his own visual system.",
         detail: [
@@ -540,10 +458,8 @@ window.PASTA_CONTENT = {
         ]
       },
       {
-        title: "Branding, pressure, and freedom",
         kicker: "Theme 06",
-        image: "assets/egg.png",
-        sourceUrl: "https://www.pastaoner.cz/interview-219",
+        title: "Branding, pressure, and freedom",
         excerpt:
           "The interview also addresses the pressure of becoming a recognizable brand on the art market and the risk of repeating what already works.",
         detail: [
