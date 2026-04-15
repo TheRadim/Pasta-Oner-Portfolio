@@ -60,9 +60,9 @@ window.PASTA_CONTENT = {
   pages: {
     works: {
       kicker: "Artworks",
-      title: "Available works and recent series.",
+      title: "Posters, objects, sculptures, and editions.",
       copy:
-        "The artworks page now reads as a clean availability list rather than a stack of repeated cards. Current pieces, related works, and editions can be discussed directly with the artist."
+        "This page now focuses on artwork types rather than exhibitions. It reads more like a compact webshop list: current posters, graphic editions, sculptural objects, and special works available on request."
     },
     exhibitions: {
       kicker: "Exhibitions",
@@ -72,9 +72,9 @@ window.PASTA_CONTENT = {
     },
     interview: {
       kicker: "Interview",
-      title: "Themes from a long-form conversation.",
+      title: "A hidden subpage for the interview.",
       copy:
-        "The interview stays as its own reading page, but the layout is quieter now: one image, one lead quote, and a sequence of themes instead of stacked popups."
+        "The interview stays outside the main menu and is linked from the About page. The layout is now rebuilt as a pop-art conversation between interviewer and artist."
     },
     about: {
       kicker: "About",
@@ -129,47 +129,67 @@ window.PASTA_CONTENT = {
   },
   artworks: {
     note:
-      "Current pieces, editions, and related works are available by direct inquiry. More artworks are available than the short list shown here.",
+      "Current pieces, editions, posters, objects, and sculptural works are available by direct inquiry. More artworks are available than the short list shown here.",
     items: [
       {
-        year: "2026",
-        title: "Usual Suspect",
-        medium: "Current exhibition body of work",
+        year: "A-01",
+        title: "Poster edition",
+        medium: "Signed poster / edition",
         status: "Purchase inquiry",
         note:
-          "The newest body of work on the site. Availability and related pieces are discussed directly with the artist.",
+          "A direct route for current poster works and related edition material connected to the newer visual language.",
         ctaLabel: "Purchase inquiry",
-        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Usual%20Suspect"
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Poster%20edition"
       },
       {
-        year: "2025",
-        title: "Ermitage",
-        medium: "Painting and installation project",
+        year: "A-02",
+        title: "Acrylic canvas",
+        medium: "Original hanging painting",
         status: "Available on request",
         note:
-          "Recent works from the 2025 program can be discussed privately, including related pieces and exhibition material.",
+          "The core of the practice remains acrylic painting and hanging works. Available paintings and related canvases can be requested directly.",
         ctaLabel: "Ask about availability",
-        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Ermitage"
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Acrylic%20canvas"
       },
       {
-        year: "2024",
-        title: "Holy Grail",
-        medium: "Painting series",
+        year: "A-03",
+        title: "Graphic print",
+        medium: "Graphic sheet / print work",
         status: "Inquiry",
         note:
-          "Selected works and connected material can be requested directly from the studio.",
+          "Graphic works and print-based outputs are available separately from the exhibition program.",
         ctaLabel: "Request details",
-        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Holy%20Grail"
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Graphic%20print"
       },
       {
-        year: "2023",
-        title: "The Gilded Age",
-        medium: "Painting series",
+        year: "A-04",
+        title: "Spatial object",
+        medium: "Object / special piece",
         status: "Inquiry",
         note:
-          "For availability and additional artworks beyond the site, contact the artist directly.",
-        ctaLabel: "Contact for works",
-        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20The%20Gilded%20Age"
+          "Spatial objects and special pieces can be discussed privately, depending on scale and availability.",
+        ctaLabel: "Contact for objects",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Spatial%20object"
+      },
+      {
+        year: "A-05",
+        title: "Sculptural work",
+        medium: "Sculpture / statue",
+        status: "Commission or inquiry",
+        note:
+          "Sculptural works and statue-like pieces sit alongside the paintings and object-based practice.",
+        ctaLabel: "Ask about sculpture",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Sculptural%20work"
+      },
+      {
+        year: "A-06",
+        title: "Special edition",
+        medium: "Limited edition / special release",
+        status: "Direct request",
+        note:
+          "For smaller collectible formats, limited editions, and pieces not listed publicly, direct contact works best.",
+        ctaLabel: "Request current editions",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Special%20edition"
       }
     ]
   },
@@ -394,63 +414,51 @@ window.PASTA_CONTENT = {
   interview: {
     leadQuote:
       "Rather than claiming moral distance from consumer culture, he prefers to speak from inside that condition and use irony, reflection, and recognizable desire as material.",
-    themes: [
+    qa: [
       {
-        kicker: "Theme 01",
-        title: "From graffiti to gallery work",
-        excerpt:
-          "Pasta Oner describes graffiti as a foundational period that taught discipline, total commitment, and a relationship to the city, while also making clear that his current studio and gallery practice has moved elsewhere.",
-        detail: [
+        question: "How do you think about the graffiti years now that your work lives mainly in galleries and studios?",
+        answer: [
+          "Graffiti was a foundational period. It taught discipline, total commitment, and a strong relationship to the city, but he is also clear that his active practice has moved elsewhere.",
           "He talks openly about how the media still frames him through his street and graffiti past because the story is attractive and easy to retell, even though his active connection to that scene ended long ago.",
           "That tension leaves him somewhere in between: no longer part of graffiti culture in an active sense, but never fully embraced by the academic art track either."
         ]
       },
       {
-        kicker: "Theme 02",
-        title: "Post-pop culture, not just postmodernism",
-        excerpt:
+        question: "Why do you describe the work as post-pop culture instead of just postmodern?",
+        answer: [
           "Instead of calling the work simply postmodern, he prefers the phrase post-pop culture because the imagery pulls from everything that fascinates him across decades of consumer symbols, art history, and visual language.",
-        detail: [
           "In the interview he connects this to contemporary urban icons such as delivery brands and other everyday symbols that become just as culturally charged as older pop references.",
           "That position keeps the work open, playful, and visually direct without reducing it to nostalgia."
         ]
       },
       {
-        kicker: "Theme 03",
-        title: "Art as intelligent entertainment",
-        excerpt:
+        question: "Can art still be entertaining without becoming shallow?",
+        answer: [
           "He argues that contemporary art should still be allowed to function as intelligent entertainment: emotionally legible, visually attractive, and capable of giving people relief instead of speaking only inward to art-world specialists.",
-        detail: [
           "This does not mean simplifying the work into empty decoration. It means building a form of communication that meets people where they are and allows them to find their own critical distance.",
           "The interview repeatedly returns to the idea that empathy, irony, and recognisable symbols can sometimes reach wider audiences more effectively than pure severity."
         ]
       },
       {
-        kicker: "Theme 04",
-        title: "Living inside the system",
-        excerpt:
+        question: "You often work with consumer culture. Do you feel outside of that system or inside it?",
+        answer: [
           "Rather than claiming moral distance from consumer culture and capitalism, he prefers to speak from inside that condition and use irony, reflection, and recognizable desire as material.",
-        detail: [
           "He sees this as a fairer position than pretending to stand outside the structures everyone is already entangled in.",
           "In the interview, that stance becomes a way to talk to people without accusation and without surrendering critique."
         ]
       },
       {
-        kicker: "Theme 05",
-        title: "Old masters, collage, and spirituality",
-        excerpt:
+        question: "Where did the mix of old masters, collage, and spirituality begin to enter the paintings?",
+        answer: [
           "A major shift in the paintings came from encountering old masters in museums and realizing that fragments of historical painting could be pulled into his own visual system.",
-        detail: [
           "He connects that move to earlier interventions into found oil paintings and to a longer fascination with biblical and spiritual motifs.",
           "For him, combining old masters with pop-art stylization becomes a kind of time travel, bringing historical imagery into a contemporary visual grammar."
         ]
       },
       {
-        kicker: "Theme 06",
-        title: "Branding, pressure, and freedom",
-        excerpt:
+        question: "How do you handle the pressure of becoming recognisable on the art market?",
+        answer: [
           "The interview also addresses the pressure of becoming a recognizable brand on the art market and the risk of repeating what already works.",
-        detail: [
           "Pasta Oner describes learning to work against internal self-censorship and pushing new techniques even when collectors and audiences may need time to accept them.",
           "He sees that experimentation as necessary protection against routine, even while acknowledging the financial and organizational machine around a successful practice."
         ]

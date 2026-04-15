@@ -165,8 +165,8 @@
     if (featured) {
       featured.innerHTML = content.featuredExhibitions
         .map(
-          (item, index) => `
-            <details class="exhibition-item"${index === 0 ? " open" : ""}>
+          (item) => `
+            <details class="exhibition-item">
               <summary class="exhibition-item__summary">
                 <span class="exhibition-item__status">${escapeHtml(item.status)}</span>
                 <div class="exhibition-item__headline">
@@ -221,16 +221,20 @@
     const list = document.querySelector("[data-interview-list]");
     if (!list) return;
 
-    list.innerHTML = content.interview.themes
+    list.innerHTML = content.interview.qa
       .map(
-        (theme) => `
-          <article class="essay-section">
-            <span class="essay-section__kicker">${escapeHtml(theme.kicker)}</span>
-            <h2 class="essay-section__title">${escapeHtml(theme.title)}</h2>
-            <p class="body-copy">${escapeHtml(theme.excerpt)}</p>
-            ${theme.detail
-              .map((paragraph) => `<p class="body-copy body-copy--muted">${escapeHtml(paragraph)}</p>`)
-              .join("")}
+        (item, index) => `
+          <article class="qa-thread">
+            <div class="speech-bubble speech-bubble--question">
+              <span class="speech-bubble__label">Interviewer</span>
+              <p class="speech-bubble__text">${escapeHtml(item.question)}</p>
+            </div>
+            <div class="speech-bubble speech-bubble--answer${index % 2 === 0 ? "" : " speech-bubble--answer-alt"}">
+              <span class="speech-bubble__label">Pasta Oner</span>
+              ${item.answer
+                .map((paragraph) => `<p class="body-copy body-copy--muted">${escapeHtml(paragraph)}</p>`)
+                .join("")}
+            </div>
           </article>
         `
       )

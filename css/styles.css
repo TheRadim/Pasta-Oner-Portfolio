@@ -121,12 +121,12 @@ img {
 
 .nav-link__hand {
   position: absolute;
-  top: -2.4rem;
-  left: 50%;
-  width: 42px;
+  top: -1rem;
+  left: 28%;
+  width: 48px;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 0.5rem) rotate(-12deg);
+  transform: translate(-50%, 0.65rem) rotate(-12deg);
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
@@ -136,6 +136,9 @@ img {
 }
 
 .nav-link__hand--alt {
+  top: -2.4rem;
+  left: 50%;
+  width: 42px;
   transform: translate(-50%, 0.5rem) rotate(10deg);
 }
 
@@ -182,7 +185,6 @@ img {
 .artwork-item__title,
 .exhibition-item__title,
 .timeline-group__year,
-.essay-section__title,
 .info-block__title {
   font-family: "Cormorant Garamond", serif;
   letter-spacing: -0.035em;
@@ -191,8 +193,9 @@ img {
 
 .display-title {
   margin: 0 0 1rem;
-  font-size: clamp(3.4rem, 8vw, 6.4rem);
-  max-width: 10ch;
+  font-size: clamp(2.6rem, 5.8vw, 4.8rem);
+  max-width: none;
+  width: 100%;
 }
 
 .section-title {
@@ -319,8 +322,8 @@ img {
 
 .section-link,
 .artwork-item,
-.essay-section,
-.practice-item {
+.practice-item,
+.qa-thread {
   border-top: 1px solid var(--line-soft);
 }
 
@@ -334,8 +337,8 @@ img {
 
 .section-link:last-child,
 .artwork-item:last-child,
-.essay-section:last-child,
-.practice-item:last-child {
+.practice-item:last-child,
+.qa-thread:last-child {
   border-bottom: 1px solid var(--line-soft);
 }
 
@@ -574,23 +577,72 @@ img {
   line-height: 0.95;
 }
 
-.essay-section {
-  padding: 1.25rem 0;
+.qa-thread {
+  display: grid;
+  gap: 1rem;
+  padding: 1.35rem 0;
 }
 
-.essay-section__kicker {
+.speech-bubble {
+  position: relative;
+  max-width: 54rem;
+  padding: 1.1rem 1.2rem;
+  border: 2px solid var(--line);
+  border-radius: 30px;
+  background: var(--surface);
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  width: 20px;
+  height: 20px;
+  border-bottom: 2px solid var(--line);
+  background: inherit;
+}
+
+.speech-bubble--question {
+  background: #fff3c4;
+}
+
+.speech-bubble--question::after {
+  left: 24px;
+  border-left: 2px solid var(--line);
+  border-radius: 0 0 0 18px;
+  transform: skewX(-18deg);
+}
+
+.speech-bubble--answer {
+  margin-left: auto;
+}
+
+.speech-bubble--answer::after {
+  right: 26px;
+  border-right: 2px solid var(--line);
+  border-radius: 0 0 18px 0;
+  transform: skewX(18deg);
+}
+
+.speech-bubble--answer-alt {
+  background: #ffffff;
+}
+
+.speech-bubble__label {
   display: inline-block;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
   color: var(--text-soft);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.essay-section__title {
-  margin: 0 0 0.85rem;
-  font-size: clamp(2rem, 4vw, 3.1rem);
+.speech-bubble__text {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.65rem, 3.4vw, 2.5rem);
+  line-height: 1.02;
 }
 
 .language-switch {
@@ -683,13 +735,20 @@ img {
   }
 
   .navbar-collapse {
+    width: 100%;
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--line-soft);
   }
 
+  .site-nav,
+  .site-nav .nav-item {
+    width: 100%;
+  }
+
   .site-nav .nav-link {
     width: 100%;
+    min-width: 0;
     justify-content: flex-start;
   }
 }
@@ -722,18 +781,31 @@ img {
   }
 
   .display-title {
-    font-size: clamp(2.7rem, 14vw, 4.4rem);
+    font-size: clamp(2.25rem, 9vw, 3.3rem);
+    max-width: none;
+    width: 100%;
   }
 
   .hero-actions,
   .site-footer__inner,
   .site-footer__links {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .button-link {
     width: 100%;
+  }
+
+  .site-footer__inner,
+  .site-footer__inner p,
+  .site-footer__links {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .site-footer__inner p {
+    margin-inline: auto;
   }
 
   .section-link__arrow {
@@ -742,5 +814,11 @@ img {
 
   .exhibition-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .speech-bubble,
+  .speech-bubble--answer {
+    margin-left: 0;
+    max-width: 100%;
   }
 }
