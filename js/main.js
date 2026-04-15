@@ -12,7 +12,10 @@
 
   function setText(selector, value) {
     const element = document.querySelector(selector);
-    if (element) element.textContent = value;
+    if (!element) return;
+    const hasValue = value !== undefined && value !== null && value !== "";
+    element.hidden = !hasValue;
+    if (hasValue) element.textContent = value;
   }
 
   function isExternalLink(href) {
@@ -61,7 +64,7 @@
 
     footer.innerHTML = `
       <div class="site-footer__inner">
-        <p>${escapeHtml(content.site.footerNote)}</p>
+        ${content.site.footerNote ? `<p>${escapeHtml(content.site.footerNote)}</p>` : ""}
         <div class="site-footer__links">
           ${content.contact.social
             .map((item) => buildLink(item.href, item.label))
@@ -92,7 +95,7 @@
           <a class="section-link" href="${item.href}">
             <span class="section-link__index">${escapeHtml(item.index)}</span>
             <h2 class="section-link__title">${escapeHtml(item.title)}</h2>
-            <p class="section-link__text">${escapeHtml(item.text)}</p>
+            ${item.text ? `<p class="section-link__text">${escapeHtml(item.text)}</p>` : ""}
             <span class="section-link__arrow">Open</span>
           </a>
         `
@@ -119,12 +122,12 @@
             <div class="artwork-item__year">${escapeHtml(item.year)}</div>
             <div class="artwork-item__main">
               <h2 class="artwork-item__title">${escapeHtml(item.title)}</h2>
-              <p class="artwork-item__medium">${escapeHtml(item.medium)}</p>
-              <p class="artwork-item__note">${escapeHtml(item.note)}</p>
+              ${item.medium ? `<p class="artwork-item__medium">${escapeHtml(item.medium)}</p>` : ""}
+              ${item.note ? `<p class="artwork-item__note">${escapeHtml(item.note)}</p>` : ""}
             </div>
             <div class="artwork-item__side">
-              <span class="status-pill">${escapeHtml(item.status)}</span>
-              ${buildLink(item.ctaHref, item.ctaLabel)}
+              ${item.status ? `<span class="status-pill">${escapeHtml(item.status)}</span>` : ""}
+              ${item.ctaHref && item.ctaLabel ? buildLink(item.ctaHref, item.ctaLabel) : ""}
             </div>
           </article>
         `
@@ -177,7 +180,7 @@
                 <span class="exhibition-item__toggle">View details</span>
               </summary>
               <div class="exhibition-item__body">
-                <p class="body-copy body-copy--compact">${escapeHtml(item.excerpt)}</p>
+                ${item.excerpt ? `<p class="body-copy body-copy--compact">${escapeHtml(item.excerpt)}</p>` : ""}
                 <div class="exhibition-gallery">
                   ${item.gallery
                     .map(
@@ -217,6 +220,8 @@
     setText("[data-interview-title]", page.title);
     setText("[data-interview-copy]", page.copy);
     setText("[data-interview-quote]", content.interview.leadQuote);
+    const questionLabel = content.interview.questionLabel || "Interviewer";
+    const answerLabel = content.interview.answerLabel || "Pasta Oner";
 
     const list = document.querySelector("[data-interview-list]");
     if (!list) return;
@@ -226,11 +231,11 @@
         (item, index) => `
           <article class="qa-thread">
             <div class="speech-bubble speech-bubble--question">
-              <span class="speech-bubble__label">Interviewer</span>
+              <span class="speech-bubble__label">${escapeHtml(questionLabel)}</span>
               <p class="speech-bubble__text">${escapeHtml(item.question)}</p>
             </div>
             <div class="speech-bubble speech-bubble--answer${index % 2 === 0 ? "" : " speech-bubble--answer-alt"}">
-              <span class="speech-bubble__label">Pasta Oner</span>
+              <span class="speech-bubble__label">${escapeHtml(answerLabel)}</span>
               ${item.answer
                 .map((paragraph) => `<p class="body-copy body-copy--muted">${escapeHtml(paragraph)}</p>`)
                 .join("")}
@@ -296,6 +301,8 @@
         <h2 class="info-block__title">Email & phone</h2>
         <p>${buildLink(`mailto:${content.contact.email}`, content.contact.email, "info-link")}</p>
         <p>${buildLink(content.contact.phoneHref, content.contact.phoneDisplay, "info-link")}</p>
+        <p>${escapeHtml(content.contact.csIntro)}</p>
+        <p>${escapeHtml(content.contact.enIntro)}</p>
       `;
     }
 
