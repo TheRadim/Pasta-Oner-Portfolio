@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pasta Oner | Home</title>
+  <title>Pasta Oner | Current Selection</title>
   <meta
     name="description"
-    content="A clean, multi-page portfolio concept for Czech artist Pasta Oner, led by the current exhibition and a flatter editorial layout."
+    content="A studio selection of currently available artworks by Pasta Oner."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
   >
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-page="home">
+<body data-page="available">
   <div class="site-shell">
     <header class="site-header">
       <div class="site-header__inner">
@@ -54,47 +54,22 @@
     </header>
 
     <main class="page-main">
-      <section class="landing-grid section-line">
-        <div>
-          <span class="section-kicker" data-home-kicker></span>
-          <h1 class="display-title" data-home-title></h1>
-          <p class="lead-copy" data-home-copy></p>
-          <p class="page-note" data-home-note></p>
-          <div class="hero-actions">
-            <a class="button-link button-link--filled" href="works.html" data-ui="home_primary_cta">View artworks</a>
-            <a class="button-link" href="contact.html" data-ui="home_secondary_cta">Contact the artist</a>
-          </div>
+      <section class="page-intro section-line">
+        <div class="page-intro__copy">
+          <span class="section-kicker" data-available-kicker></span>
+          <h1 class="display-title" data-available-title></h1>
+          <p class="lead-copy" data-available-copy></p>
+          <a class="text-link" href="works.html" data-ui="back_to_artworks">Back to artworks</a>
         </div>
-        <aside class="poster-panel">
-          <span class="section-kicker" data-ui="current_exhibition">Current exhibition</span>
-          <div class="poster-panel__image">
-            <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
+        <aside class="media-panel media-panel--hero">
+          <div class="media-panel__image">
+            <img src="assets/art.jpeg" alt="Pasta Oner current selection image">
           </div>
         </aside>
       </section>
 
-      <section class="section-line landing-info">
-        <div>
-          <span class="section-kicker" data-ui="home_offerings_kicker">Offerings</span>
-          <p class="body-copy">
-            <span data-ui="home_offerings_text">Current works, editions, exhibition information, and studio inquiries are handled directly.</span>
-          </p>
-        </div>
-        <div>
-          <span class="section-kicker" data-ui="home_contact_kicker">Contact note</span>
-          <p class="body-copy">
-            <span data-ui="home_contact_text">For more available works, current exhibition information, or collaboration requests, use the direct contact page.</span>
-          </p>
-          <a class="text-link" href="contact.html" data-ui="home_contact_link">Open contact</a>
-        </div>
-      </section>
-
       <section class="section-line">
-        <div class="section-heading">
-          <span class="section-kicker" data-ui="home_structure_kicker">Structure</span>
-          <h2 class="section-title" data-ui="home_structure_title">A simple portfolio map with dedicated subpages.</h2>
-        </div>
-        <div class="section-links" data-home-links></div>
+        <div class="available-grid" data-available-grid></div>
       </section>
     </main>
 

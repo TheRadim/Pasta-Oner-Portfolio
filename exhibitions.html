@@ -25,27 +25,32 @@
 <body data-page="exhibitions">
   <div class="site-shell">
     <header class="site-header">
-      <nav class="navbar navbar-expand-xl">
-        <div class="container-fluid site-header__inner">
-          <a class="site-brand" href="index.html" aria-label="Go to homepage">
-            <img src="assets/logo.png" alt="Pasta Oner logo">
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#siteNav"
-            aria-controls="siteNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="siteNav">
-            <ul class="navbar-nav ms-auto site-nav" data-site-nav></ul>
+      <div class="site-header__inner">
+        <a class="site-brand" href="index.html" aria-label="Go to homepage">
+          <img src="assets/logo.png" alt="Pasta Oner logo">
+        </a>
+        <div class="site-header__actions">
+          <div class="language-switch language-switch--global" role="group" aria-label="Language switch">
+            <button class="language-switch__button" type="button" data-set-lang="cs">CZ</button>
+            <button class="language-switch__button" type="button" data-set-lang="en">EN</button>
           </div>
+          <button class="menu-toggle" type="button" data-menu-toggle aria-controls="siteNavPanel" aria-expanded="false">
+            <span class="menu-toggle__label" data-ui="menu_open">Menu</span>
+            <span class="menu-toggle__icon" aria-hidden="true"></span>
+          </button>
         </div>
-      </nav>
+      </div>
+      <div class="menu-panel" id="siteNavPanel" data-menu-panel aria-hidden="true">
+        <div class="menu-panel__header">
+          <span class="menu-panel__eyebrow">Pasta Oner</span>
+          <button class="menu-close" type="button" data-menu-close aria-label="Close menu" data-ui="menu_close">Close</button>
+        </div>
+        <div class="menu-panel__body">
+          <p class="menu-panel__intro" data-ui="menu_intro">A minimal archive of artworks, exhibitions, writing, and direct contact.</p>
+          <ul class="site-nav" data-site-nav></ul>
+        </div>
+      </div>
+      <button class="menu-backdrop" type="button" data-menu-close tabindex="-1" aria-hidden="true"></button>
     </header>
 
     <main class="page-main">
@@ -55,7 +60,7 @@
           <h1 class="display-title" data-exhibitions-title></h1>
           <p class="lead-copy" data-exhibitions-copy></p>
           <div class="inline-actions current-exhibition-meta">
-            <span class="status-pill">Current exhibition</span>
+            <span class="status-pill" data-ui="current_exhibition">Current exhibition</span>
             <span class="meta-line" data-exhibitions-current-dates></span>
           </div>
           <div class="current-exhibition-copy">
@@ -73,31 +78,31 @@
 
       <section class="section-line">
         <div class="section-heading">
-          <span class="section-kicker">Featured exhibitions</span>
-          <h2 class="section-title">Open each exhibition for more visuals and context.</h2>
+          <span class="section-kicker" data-ui="featured_exhibitions">Featured exhibitions</span>
+          <h2 class="section-title" data-ui="featured_exhibitions_title">Open each exhibition for more visuals and context.</h2>
         </div>
         <div class="exhibitions-stack" data-exhibitions-featured></div>
       </section>
 
       <section class="section-line">
         <details class="archive-toggle">
-          <summary>Open full exhibition archive</summary>
+          <summary data-ui="archive_open">Open full exhibition archive</summary>
           <div class="archive-toggle__content">
             <div>
-              <span class="section-kicker">Collections</span>
+              <span class="section-kicker" data-ui="collections">Collections</span>
               <ul class="collections-list" data-collections-list></ul>
             </div>
             <div class="archive-columns">
               <section class="timeline-panel">
-                <span class="section-kicker">Solo</span>
+                <span class="section-kicker" data-ui="solo">Solo</span>
                 <div data-solo-list></div>
               </section>
               <section class="timeline-panel">
-                <span class="section-kicker">Group</span>
+                <span class="section-kicker" data-ui="group">Group</span>
                 <div data-group-list></div>
               </section>
               <section class="timeline-panel">
-                <span class="section-kicker">Public space</span>
+                <span class="section-kicker" data-ui="public_space">Public space</span>
                 <div data-public-list></div>
               </section>
             </div>

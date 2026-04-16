@@ -25,27 +25,32 @@
 <body data-page="about">
   <div class="site-shell">
     <header class="site-header">
-      <nav class="navbar navbar-expand-xl">
-        <div class="container-fluid site-header__inner">
-          <a class="site-brand" href="index.html" aria-label="Go to homepage">
-            <img src="assets/logo.png" alt="Pasta Oner logo">
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#siteNav"
-            aria-controls="siteNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="siteNav">
-            <ul class="navbar-nav ms-auto site-nav" data-site-nav></ul>
+      <div class="site-header__inner">
+        <a class="site-brand" href="index.html" aria-label="Go to homepage">
+          <img src="assets/logo.png" alt="Pasta Oner logo">
+        </a>
+        <div class="site-header__actions">
+          <div class="language-switch language-switch--global" role="group" aria-label="Language switch">
+            <button class="language-switch__button" type="button" data-set-lang="cs">CZ</button>
+            <button class="language-switch__button" type="button" data-set-lang="en">EN</button>
           </div>
+          <button class="menu-toggle" type="button" data-menu-toggle aria-controls="siteNavPanel" aria-expanded="false">
+            <span class="menu-toggle__label" data-ui="menu_open">Menu</span>
+            <span class="menu-toggle__icon" aria-hidden="true"></span>
+          </button>
         </div>
-      </nav>
+      </div>
+      <div class="menu-panel" id="siteNavPanel" data-menu-panel aria-hidden="true">
+        <div class="menu-panel__header">
+          <span class="menu-panel__eyebrow">Pasta Oner</span>
+          <button class="menu-close" type="button" data-menu-close aria-label="Close menu" data-ui="menu_close">Close</button>
+        </div>
+        <div class="menu-panel__body">
+          <p class="menu-panel__intro" data-ui="menu_intro">A minimal archive of artworks, exhibitions, writing, and direct contact.</p>
+          <ul class="site-nav" data-site-nav></ul>
+        </div>
+      </div>
+      <button class="menu-backdrop" type="button" data-menu-close tabindex="-1" aria-hidden="true"></button>
     </header>
 
     <main class="page-main">
@@ -53,10 +58,6 @@
         <div class="about-layout__copy">
           <span class="section-kicker" data-about-kicker></span>
           <h1 class="display-title" data-about-title></h1>
-          <div class="language-switch" role="tablist" aria-label="Biography language">
-            <button class="language-switch__button is-active" type="button" data-lang-toggle="cs">CZ</button>
-            <button class="language-switch__button" type="button" data-lang-toggle="en">EN</button>
-          </div>
           <div class="body-copy bio-copy" data-bio-copy></div>
         </div>
         <aside class="media-panel media-panel--portrait">
@@ -67,10 +68,10 @@
       </section>
 
       <section class="section-line interview-teaser">
-        <span class="section-kicker">Interview</span>
+        <span class="section-kicker" data-ui="interview">Interview</span>
         <h2 class="section-title section-title--compact" data-about-interview-title></h2>
         <p class="body-copy" data-about-interview-copy></p>
-        <a class="text-link" href="interview.html">Open interview subpage</a>
+        <a class="text-link" href="interview.html" data-ui="open_interview_subpage">Open interview subpage</a>
       </section>
     </main>
 

@@ -1,6 +1,8 @@
 (function () {
   const content = window.PASTA_CONTENT;
   const pageId = document.body.dataset.page;
+  const STORAGE_KEY = "pastaoner-language";
+  let currentLang = window.localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "cs";
 
   function escapeHtml(value) {
     return String(value)
@@ -18,6 +20,27 @@
     if (hasValue) element.textContent = value;
   }
 
+  function localize(value, language = currentLang) {
+    if (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      (Object.prototype.hasOwnProperty.call(value, "cs") || Object.prototype.hasOwnProperty.call(value, "en"))
+    ) {
+      return value[language] ?? value.cs ?? value.en ?? "";
+    }
+
+    return value;
+  }
+
+  function setLocalizedText(selector, value) {
+    setText(selector, localize(value));
+  }
+
+  function t(key) {
+    return localize(content.ui?.[key]) || "";
+  }
+
   function isExternalLink(href) {
     return /^(https?:)?\/\//.test(href);
   }
@@ -27,11 +50,11 @@
   }
 
   function buildLink(href, label, className = "text-link") {
-    return `<a class="${className}" href="${href}"${linkAttrs(href)}>${escapeHtml(label)}</a>`;
+    return `<a class="${className}" href="${href}"${linkAttrs(href)}>${escapeHtml(localize(label))}</a>`;
   }
 
   function isActiveNavItem(itemId) {
-    return itemId === pageId || (pageId === "interview" && itemId === "about");
+    return itemId === pageId || (pageId === "interview" && itemId === "about") || (pageId === "available" && itemId === "works");
   }
 
   function renderSiteNav() {
@@ -42,13 +65,14 @@
       .map((item, index) => {
         const activeClass = isActiveNavItem(item.id) ? " active" : "";
         const current = isActiveNavItem(item.id) ? ' aria-current="page"' : "";
-        const handClass = index % 2 === 0 ? "" : " nav-link__hand--alt";
+        const handClass = item.hand.includes("handleftdown") ? " menu-link__hand--alt" : "";
 
         return `
-          <li class="nav-item">
-            <a class="nav-link${activeClass}" href="${item.href}"${current}>
-              <span class="nav-link__label">${escapeHtml(item.label)}</span>
-              <span class="nav-link__hand${handClass}" aria-hidden="true">
+          <li class="site-nav__item">
+            <a class="menu-link${activeClass}" href="${item.href}"${current}>
+              <span class="menu-link__index">${String(index + 1).padStart(2, "0")}</span>
+              <span class="menu-link__label">${escapeHtml(localize(item.label))}</span>
+              <span class="menu-link__hand${handClass}" aria-hidden="true">
                 <img src="${item.hand}" alt="">
               </span>
             </a>
@@ -64,7 +88,7 @@
 
     footer.innerHTML = `
       <div class="site-footer__inner">
-        ${content.site.footerNote ? `<p>${escapeHtml(content.site.footerNote)}</p>` : ""}
+        ${content.site.footerNote ? `<p>${escapeHtml(localize(content.site.footerNote))}</p>` : ""}
         <div class="site-footer__links">
           ${content.contact.social
             .map((item) => buildLink(item.href, item.label))
@@ -74,13 +98,29 @@
     `;
   }
 
+  function renderUiText() {
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll("[data-ui]").forEach((element) => {
+      const value = t(element.dataset.ui);
+      if (!value) return;
+      element.textContent = value;
+    });
+
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    if (menuToggle) menuToggle.setAttribute("aria-label", t("menu_open"));
+
+    document.querySelectorAll("[data-menu-close]").forEach((button) => {
+      button.setAttribute("aria-label", t("menu_close"));
+    });
+  }
+
   function renderHomePage() {
     if (!document.querySelector("[data-home-title]")) return;
 
-    setText("[data-home-kicker]", content.home.kicker);
-    setText("[data-home-title]", content.home.title);
-    setText("[data-home-copy]", content.home.copy);
-    setText("[data-home-note]", content.home.note);
+    setLocalizedText("[data-home-kicker]", content.home.kicker);
+    setLocalizedText("[data-home-title]", content.home.title);
+    setLocalizedText("[data-home-copy]", content.home.copy);
+    setLocalizedText("[data-home-note]", content.home.note);
 
     const links = document.querySelector("[data-home-links]");
     if (!links) return;
@@ -90,9 +130,11 @@
         (item) => `
           <a class="section-link" href="${item.href}">
             <span class="section-link__index">${escapeHtml(item.index)}</span>
-            <h2 class="section-link__title">${escapeHtml(item.title)}</h2>
-            ${item.text ? `<p class="section-link__text">${escapeHtml(item.text)}</p>` : ""}
-            <span class="section-link__arrow">Open</span>
+            <div class="section-link__content">
+              <h2 class="section-link__title">${escapeHtml(localize(item.title))}</h2>
+              ${item.text ? `<p class="section-link__text">${escapeHtml(localize(item.text))}</p>` : ""}
+            </div>
+            <span class="section-link__arrow">${escapeHtml(t("open"))}</span>
           </a>
         `
       )
@@ -103,10 +145,10 @@
     if (!document.querySelector("[data-works-title]")) return;
 
     const page = content.pages.works;
-    setText("[data-works-kicker]", page.kicker);
-    setText("[data-works-title]", page.title);
-    setText("[data-works-copy]", page.copy);
-    setText("[data-artworks-note]", content.artworks.note);
+    setLocalizedText("[data-works-kicker]", page.kicker);
+    setLocalizedText("[data-works-title]", page.title);
+    setLocalizedText("[data-works-copy]", page.copy);
+    setLocalizedText("[data-artworks-note]", content.artworks.note);
 
     const list = document.querySelector("[data-artworks-list]");
     if (!list) return;
@@ -116,19 +158,51 @@
         (item) => `
           <article class="artwork-card">
             <div class="artwork-card__image">
-              <img src="${item.image}" alt="${escapeHtml(item.alt || item.title)}">
+              <img src="${item.image}" alt="${escapeHtml(localize(item.alt || item.title))}">
             </div>
-            <div class="artwork-card__overlay">
+            <div class="artwork-card__body">
               <div class="artwork-card__meta">
                 <span class="artwork-card__index">${escapeHtml(item.year)}</span>
-                ${item.status ? `<span class="status-pill">${escapeHtml(item.status)}</span>` : ""}
+                ${item.status ? `<span class="status-pill">${escapeHtml(localize(item.status))}</span>` : ""}
               </div>
-              <div class="artwork-card__copy">
-                <h2 class="artwork-card__title">${escapeHtml(item.title)}</h2>
-                ${item.medium ? `<p class="artwork-card__medium">${escapeHtml(item.medium)}</p>` : ""}
-                ${item.note ? `<p class="artwork-card__note">${escapeHtml(item.note)}</p>` : ""}
-              </div>
+              <h2 class="artwork-card__title">${escapeHtml(localize(item.title))}</h2>
+              ${item.medium ? `<p class="artwork-card__medium">${escapeHtml(localize(item.medium))}</p>` : ""}
+              ${item.note ? `<p class="artwork-card__note">${escapeHtml(localize(item.note))}</p>` : ""}
               ${item.ctaHref && item.ctaLabel ? buildLink(item.ctaHref, item.ctaLabel, "artwork-card__link") : ""}
+            </div>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  function renderAvailablePage() {
+    if (!document.querySelector("[data-available-title]")) return;
+
+    const selection = content.artworks.selection;
+    setLocalizedText("[data-available-kicker]", selection.kicker);
+    setLocalizedText("[data-available-title]", selection.title);
+    setLocalizedText("[data-available-copy]", selection.copy);
+
+    const grid = document.querySelector("[data-available-grid]");
+    if (!grid) return;
+
+    grid.innerHTML = selection.items
+      .map(
+        (item) => `
+          <article class="available-card">
+            <div class="available-card__image">
+              <img src="${item.image}" alt="${escapeHtml(localize(item.title))}">
+            </div>
+            <div class="available-card__body">
+              <div class="available-card__meta">
+                <span class="available-card__code">${escapeHtml(item.code)}</span>
+                <span class="status-pill">${escapeHtml(localize(item.status))}</span>
+              </div>
+              <h2 class="available-card__title">${escapeHtml(localize(item.title))}</h2>
+              <p class="available-card__type">${escapeHtml(localize(item.type))}</p>
+              <p class="available-card__size">${escapeHtml(item.size)}</p>
+              ${buildLink(`mailto:${content.contact.email}?subject=${encodeURIComponent(`Artwork inquiry - ${localize(item.title, "en")}`)}`, { cs: "Poslat poptavku", en: "Send inquiry" }, "available-card__link")}
             </div>
           </article>
         `
@@ -145,7 +219,7 @@
           <section class="timeline-group">
             <h3 class="timeline-group__year">${escapeHtml(group.year)}</h3>
             <ul class="timeline-group__items">
-              ${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+              ${group.items.map((item) => `<li>${escapeHtml(localize(item))}</li>`).join("")}
             </ul>
           </section>
         `
@@ -157,13 +231,13 @@
     if (!document.querySelector("[data-exhibitions-title]")) return;
 
     const page = content.pages.exhibitions;
-    setText("[data-exhibitions-kicker]", page.kicker);
-    setText("[data-exhibitions-title]", page.title);
-    setText("[data-exhibitions-copy]", page.copy);
-    setText("[data-exhibitions-current-title]", content.currentExhibition.title);
-    setText("[data-exhibitions-current-dates]", content.currentExhibition.dates);
-    setText("[data-exhibitions-current-venue]", content.currentExhibition.venue);
-    setText("[data-exhibitions-current-note]", content.currentExhibition.note);
+    setLocalizedText("[data-exhibitions-kicker]", page.kicker);
+    setLocalizedText("[data-exhibitions-title]", page.title);
+    setLocalizedText("[data-exhibitions-copy]", page.copy);
+    setLocalizedText("[data-exhibitions-current-title]", content.currentExhibition.title);
+    setLocalizedText("[data-exhibitions-current-dates]", content.currentExhibition.dates);
+    setLocalizedText("[data-exhibitions-current-venue]", content.currentExhibition.venue);
+    setLocalizedText("[data-exhibitions-current-note]", content.currentExhibition.note);
 
     const featured = document.querySelector("[data-exhibitions-featured]");
     if (featured) {
@@ -172,16 +246,16 @@
           (item) => `
             <details class="exhibition-item">
               <summary class="exhibition-item__summary">
-                <span class="exhibition-item__status">${escapeHtml(item.status)}</span>
+                <span class="exhibition-item__status">${escapeHtml(localize(item.status))}</span>
                 <div class="exhibition-item__headline">
-                  <h2 class="exhibition-item__title">${escapeHtml(item.title)}</h2>
-                  <p>${escapeHtml(item.venue)}</p>
-                  <p>${escapeHtml(item.dates)}</p>
+                  <h2 class="exhibition-item__title">${escapeHtml(localize(item.title))}</h2>
+                  <p>${escapeHtml(localize(item.venue))}</p>
+                  <p>${escapeHtml(localize(item.dates))}</p>
                 </div>
-                <span class="exhibition-item__toggle">View details</span>
+                <span class="exhibition-item__toggle">${escapeHtml(t("view_details"))}</span>
               </summary>
               <div class="exhibition-item__body">
-                ${item.excerpt ? `<p class="body-copy body-copy--compact">${escapeHtml(item.excerpt)}</p>` : ""}
+                ${item.excerpt ? `<p class="body-copy body-copy--compact">${escapeHtml(localize(item.excerpt))}</p>` : ""}
                 <div class="exhibition-gallery">
                   ${item.gallery
                     .map(
@@ -217,12 +291,11 @@
     if (!document.querySelector("[data-interview-title]")) return;
 
     const page = content.pages.interview;
-    setText("[data-interview-kicker]", page.kicker);
-    setText("[data-interview-title]", page.title);
-    setText("[data-interview-copy]", page.copy);
-    setText("[data-interview-quote]", content.interview.leadQuote);
-    const questionLabel = content.interview.questionLabel || "Interviewer";
-    const answerLabel = content.interview.answerLabel || "Pasta Oner";
+    setLocalizedText("[data-interview-kicker]", page.kicker);
+    setLocalizedText("[data-interview-title]", page.title);
+    setLocalizedText("[data-interview-copy]", page.copy);
+    const questionLabel = localize(content.interview.questionLabel) || "Interviewer";
+    const answerLabel = localize(content.interview.answerLabel) || "Pasta Oner";
 
     const list = document.querySelector("[data-interview-list]");
     if (!list) return;
@@ -233,11 +306,11 @@
           <article class="qa-thread">
             <div class="speech-bubble speech-bubble--question">
               <span class="speech-bubble__label">${escapeHtml(questionLabel)}</span>
-              <p class="speech-bubble__text">${escapeHtml(item.question)}</p>
+              <p class="speech-bubble__text">${escapeHtml(localize(item.question))}</p>
             </div>
             <div class="speech-bubble speech-bubble--answer${index % 2 === 0 ? "" : " speech-bubble--answer-alt"}">
               <span class="speech-bubble__label">${escapeHtml(answerLabel)}</span>
-              ${item.answer
+              ${localize(item.answer)
                 .map((paragraph) => `<p class="body-copy body-copy--muted">${escapeHtml(paragraph)}</p>`)
                 .join("")}
             </div>
@@ -251,45 +324,39 @@
     const copy = document.querySelector("[data-bio-copy]");
     if (!copy) return;
 
-    copy.innerHTML = content.about[language]
+    copy.innerHTML = localize(content.about.paragraphs, language)
       .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
       .join("");
-
-    document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.langToggle === language);
-    });
   }
 
   function renderAboutPage() {
     if (!document.querySelector("[data-about-title]")) return;
 
     const page = content.pages.about;
-    setText("[data-about-kicker]", page.kicker);
-    setText("[data-about-title]", page.title);
-    setText("[data-about-interview-title]", content.interviewTeaser.title);
-    setText("[data-about-interview-copy]", content.interviewTeaser.text);
-    renderBio("cs");
+    setLocalizedText("[data-about-kicker]", page.kicker);
+    setLocalizedText("[data-about-title]", page.title);
+    setLocalizedText("[data-about-interview-title]", content.interviewTeaser.title);
+    setLocalizedText("[data-about-interview-copy]", content.interviewTeaser.text);
+    renderBio(currentLang);
   }
 
   function renderContactPage() {
     if (!document.querySelector("[data-contact-title]")) return;
 
     const page = content.pages.contact;
-    setText("[data-contact-kicker]", page.kicker);
-    setText("[data-contact-title]", page.title);
+    setLocalizedText("[data-contact-kicker]", page.kicker);
+    setLocalizedText("[data-contact-title]", page.title);
     const contactCopy = document.querySelector("[data-contact-copy]");
     if (contactCopy) {
-      contactCopy.innerHTML = `
-        <p>${escapeHtml(content.contact.csIntro)}</p>
-        <p>${escapeHtml(content.contact.enIntro)}</p>
-      `;
+      const intro = localize(content.contact.intro);
+      contactCopy.innerHTML = intro.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
     }
 
     const primary = document.querySelector("[data-contact-primary]");
     if (primary) {
       primary.innerHTML = `
-        <span class="section-kicker">Direct contact</span>
-        <h2 class="info-block__title">Email & phone</h2>
+        <span class="section-kicker">${escapeHtml(t("direct_contact"))}</span>
+        <h2 class="info-block__title">${escapeHtml(t("email_phone"))}</h2>
         <p>${buildLink(`mailto:${content.contact.email}`, content.contact.email, "info-link")}</p>
         <p>${buildLink(content.contact.phoneHref, content.contact.phoneDisplay, "info-link")}</p>
       `;
@@ -298,8 +365,8 @@
     const social = document.querySelector("[data-contact-social]");
     if (social) {
       social.innerHTML = `
-        <span class="section-kicker">Social</span>
-        <h2 class="info-block__title">Facebook & Instagram</h2>
+        <span class="section-kicker">${escapeHtml(t("social"))}</span>
+        <h2 class="info-block__title">${escapeHtml(t("facebook_instagram"))}</h2>
         <div class="stack-links">
           ${content.contact.social.map((item) => buildLink(item.href, item.label, "info-link")).join("")}
         </div>
@@ -309,30 +376,88 @@
     const legal = document.querySelector("[data-contact-legal]");
     if (legal) {
       legal.innerHTML = `
-        <span class="section-kicker">Legal</span>
+        <span class="section-kicker">${escapeHtml(t("legal"))}</span>
         <h2 class="info-block__title">Emerging Art a.s.</h2>
-        ${content.contact.legal.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
+        ${localize(content.contact.legal).map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
       `;
     }
   }
 
+  function syncLanguageButtons() {
+    document.querySelectorAll("[data-set-lang]").forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.setLang === currentLang);
+    });
+  }
+
+  function renderPage() {
+    renderUiText();
+    renderSiteNav();
+    renderFooter();
+    initPage();
+    syncLanguageButtons();
+  }
+
+  function setLanguage(language) {
+    currentLang = language === "en" ? "en" : "cs";
+    window.localStorage.setItem(STORAGE_KEY, currentLang);
+    renderPage();
+  }
+
   function setupLanguageSwitch() {
-    document.querySelectorAll("[data-lang-toggle]").forEach((button) => {
-      button.addEventListener("click", () => renderBio(button.dataset.langToggle));
+    document.querySelectorAll("[data-set-lang]").forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.setLang));
+    });
+  }
+
+  function setupMenu() {
+    const panel = document.querySelector("[data-menu-panel]");
+    const toggle = document.querySelector("[data-menu-toggle]");
+    if (!panel || !toggle) return;
+
+    const closeMenu = () => {
+      document.body.classList.remove("menu-open");
+      toggle.setAttribute("aria-expanded", "false");
+      panel.setAttribute("aria-hidden", "true");
+    };
+
+    const openMenu = () => {
+      document.body.classList.add("menu-open");
+      toggle.setAttribute("aria-expanded", "true");
+      panel.setAttribute("aria-hidden", "false");
+    };
+
+    toggle.addEventListener("click", () => {
+      if (document.body.classList.contains("menu-open")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.querySelectorAll("[data-menu-close]").forEach((button) => {
+      button.addEventListener("click", closeMenu);
+    });
+
+    panel.addEventListener("click", (event) => {
+      if (event.target.closest("[data-site-nav] a")) closeMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
     });
   }
 
   function initPage() {
     renderHomePage();
     renderWorksPage();
+    renderAvailablePage();
     renderExhibitionsPage();
     renderInterviewPage();
     renderAboutPage();
     renderContactPage();
   }
 
-  renderSiteNav();
-  renderFooter();
-  initPage();
+  renderPage();
   setupLanguageSwitch();
+  setupMenu();
 })();
