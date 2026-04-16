@@ -50,23 +50,23 @@
 
     <main class="page-main">
       <section class="page-intro section-line">
-        <div>
+        <div class="page-intro__copy">
           <span class="section-kicker" data-exhibitions-kicker></span>
           <h1 class="display-title" data-exhibitions-title></h1>
           <p class="lead-copy" data-exhibitions-copy></p>
-          <div class="inline-actions">
+          <div class="inline-actions current-exhibition-meta">
             <span class="status-pill">Current exhibition</span>
             <span class="meta-line" data-exhibitions-current-dates></span>
           </div>
-        </div>
-        <aside class="poster-panel">
-          <div class="poster-panel__image">
-            <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
-          </div>
-          <div class="poster-panel__meta">
+          <div class="current-exhibition-copy">
             <h2 class="section-title section-title--compact" data-exhibitions-current-title></h2>
             <p class="meta-line" data-exhibitions-current-venue></p>
             <p class="body-copy body-copy--compact" data-exhibitions-current-note></p>
+          </div>
+        </div>
+        <aside class="poster-panel poster-panel--hero">
+          <div class="poster-panel__image">
+            <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
           </div>
         </aside>
       </section>

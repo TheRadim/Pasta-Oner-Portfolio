@@ -77,14 +77,12 @@ window.PASTA_CONTENT = {
     about: {
       kicker: "About",
       title: "Pasta Oner (1979)",
-      copy:
-        "Jeden z nejvýraznějších současných umělců české vizuální scény, dlouhodobě a systematicky reflektuje svým charakteristickým, smířlivým a neodsuzujícím způsobem soudobou popkulturní společnost v plné škále její významové, hodnotové i symbolické vrstevnatosti."
+      copy: ""
     },
     contact: {
       kicker: "Contact",
-      title: "Pro aktuální nabídku prací prosím kontaktujte:",
-      copy:
-        "For current offer of works please contact: production on phone +420 606 732 264 or e-mail to pasta@pastaoner.cz."
+      title: "pasta@pastaoner.cz",
+      copy: ""
     }
   },
   interviewTeaser: {
@@ -135,28 +133,67 @@ window.PASTA_CONTENT = {
     items: [
       {
         year: "01",
-        title: "Acrylic painting and the creation of hanging paintings",
-        medium: "",
-        status: "",
-        note: "",
+        title: "Acrylic painting",
+        medium: "The focus of Pasta's work is acrylic painting.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/art.jpeg",
+        alt: "Acrylic painting placeholder",
         ctaLabel: "Contact",
         ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Acrylic%20painting"
       },
       {
         year: "02",
-        title: "The design of spatial objects, sculptures, installations",
-        medium: "",
-        status: "",
-        note: "",
+        title: "Hanging paintings",
+        medium: "The creation of hanging paintings.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/pourimagevertical.png",
+        alt: "Hanging painting placeholder",
+        ctaLabel: "Contact",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Hanging%20paintings"
+      },
+      {
+        year: "03",
+        title: "Spatial objects",
+        medium: "The design of spatial objects.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/egg.png",
+        alt: "Spatial object placeholder",
         ctaLabel: "Contact",
         ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Spatial%20objects"
       },
       {
-        year: "03",
-        title: "Graphics and non-traditional innovative techniques",
-        medium: "",
-        status: "",
-        note: "",
+        year: "04",
+        title: "Sculptures",
+        medium: "Sculptures.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/davidstatue.png",
+        alt: "Sculpture placeholder",
+        ctaLabel: "Contact",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Sculptures"
+      },
+      {
+        year: "05",
+        title: "Installations",
+        medium: "Installations.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/passingphotohorizontal1.png",
+        alt: "Installation placeholder",
+        ctaLabel: "Contact",
+        ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Installations"
+      },
+      {
+        year: "06",
+        title: "Graphics",
+        medium: "Graphics and non-traditional innovative techniques.",
+        status: "Current offer",
+        note: "For current offer of works please contact.",
+        image: "assets/passingphotohorizontal2.png",
+        alt: "Graphics placeholder",
         ctaLabel: "Contact",
         ctaHref: "mailto:pasta@pastaoner.cz?subject=Artwork%20inquiry%20-%20Graphics"
       }

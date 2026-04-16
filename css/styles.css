@@ -121,12 +121,12 @@ img {
 
 .nav-link__hand {
   position: absolute;
-  top: -1rem;
-  left: 28%;
-  width: 48px;
+  top: calc(100% + 0.7rem);
+  left: calc(50% - 70px);
+  width: 52px;
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, 0.65rem) rotate(-12deg);
+  transform: translate(-50%, 0.65rem) rotate(-8deg);
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
@@ -168,6 +168,12 @@ img {
   align-items: start;
 }
 
+.page-intro__copy,
+.about-layout__copy,
+.contact-layout__copy {
+  min-width: 0;
+}
+
 .section-kicker,
 .micro-label {
   display: inline-block;
@@ -182,7 +188,6 @@ img {
 .display-title,
 .section-title,
 .section-link__title,
-.artwork-item__title,
 .exhibition-item__title,
 .timeline-group__year,
 .info-block__title {
@@ -212,8 +217,6 @@ img {
 .page-note,
 .meta-line,
 .section-link__text,
-.artwork-item__medium,
-.artwork-item__note,
 .timeline-group__items li,
 .info-block p {
   color: var(--text-soft);
@@ -282,25 +285,46 @@ img {
 
 .poster-panel,
 .media-panel {
-  border: 1px solid var(--line);
-  background: var(--surface);
+  border: 0;
+  background: transparent;
 }
 
 .poster-panel {
-  padding: 1rem;
+  padding: 0;
 }
 
 .poster-panel__image,
 .media-panel__image {
-  margin-bottom: 1rem;
   border: 1px solid var(--line-soft);
   background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .poster-panel__image img,
 .media-panel__image img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.media-panel--hero .media-panel__image,
+.poster-panel--hero .poster-panel__image {
+  min-height: clamp(420px, 70vh, 760px);
+}
+
+.media-panel--portrait .media-panel__image {
+  min-height: clamp(420px, 74vh, 820px);
+}
+
+.about-layout__copy .language-switch {
+  margin: 0 0 1.4rem;
+}
+
+.bio-copy {
+  max-width: 48rem;
 }
 
 .landing-info {
@@ -321,7 +345,6 @@ img {
 }
 
 .section-link,
-.artwork-item,
 .practice-item,
 .qa-thread {
   border-top: 1px solid var(--line-soft);
@@ -336,7 +359,6 @@ img {
 }
 
 .section-link:last-child,
-.artwork-item:last-child,
 .practice-item:last-child,
 .qa-thread:last-child {
   border-bottom: 1px solid var(--line-soft);
@@ -367,37 +389,105 @@ img {
 
 .artwork-note {
   max-width: 54rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
-.artwork-item {
-  display: grid;
-  grid-template-columns: 82px minmax(0, 1fr) 220px;
-  gap: 1rem;
-  align-items: start;
-  padding: 1.2rem 0;
+.artwork-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
 }
 
-.artwork-item__year {
-  font-size: 0.84rem;
+.artwork-card__title {
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: -0.035em;
+}
+
+.artwork-card {
+  position: relative;
+  min-height: 430px;
+  border: 1px solid var(--line-soft);
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.artwork-card__image,
+.artwork-card__image img {
+  width: 100%;
+  height: 100%;
+}
+
+.artwork-card__image img {
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.artwork-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(18, 18, 18, 0.08) 0%, rgba(18, 18, 18, 0.68) 100%);
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.artwork-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.artwork-card__index {
+  font-size: 0.78rem;
   font-weight: 800;
-  color: var(--text-soft);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.artwork-item__title {
-  margin: 0 0 0.35rem;
-  font-size: clamp(2rem, 4vw, 3rem);
-}
-
-.artwork-item__medium,
-.artwork-item__note {
-  margin: 0;
-}
-
-.artwork-item__side {
+.artwork-card__copy {
   display: grid;
-  gap: 0.9rem;
-  justify-items: start;
+  gap: 0.45rem;
+}
+
+.artwork-card__title {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 0.96;
+}
+
+.artwork-card__medium,
+.artwork-card__note {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.6;
+}
+
+.artwork-card__link {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+.artwork-card__overlay .status-pill {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(17, 17, 17, 0.22);
+  color: #ffffff;
+}
+
+.artwork-card:hover .artwork-card__overlay,
+.artwork-card:focus-within .artwork-card__overlay {
+  opacity: 1;
+}
+
+.artwork-card:hover .artwork-card__image img,
+.artwork-card:focus-within .artwork-card__image img {
+  transform: scale(1.03);
 }
 
 .status-pill {
@@ -517,6 +607,21 @@ img {
   display: grid;
   gap: 1.5rem;
   padding-top: 1.5rem;
+}
+
+.current-exhibition-copy {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 42rem;
+}
+
+.current-exhibition-meta {
+  margin-bottom: 0.9rem;
+  align-items: center;
+}
+
+.current-exhibition-copy .section-title {
+  margin-bottom: 0;
 }
 
 .collections-list {
@@ -686,6 +791,7 @@ img {
 .interview-teaser {
   padding-top: 1.5rem;
   border-top: 1px solid var(--line-soft);
+  max-width: 52rem;
 }
 
 .info-grid {
@@ -707,6 +813,42 @@ img {
 .stack-links {
   display: grid;
   gap: 0.55rem;
+}
+
+.contact-stack {
+  display: grid;
+  gap: 1.4rem;
+  align-content: start;
+}
+
+.lead-copy--contact {
+  max-width: 40rem;
+}
+
+.lead-copy--contact p {
+  margin: 0 0 0.8rem;
+}
+
+.lead-copy--contact p:last-child {
+  margin-bottom: 0;
+}
+
+.info-block--contact,
+.info-block--legal {
+  padding-top: 0.2rem;
+}
+
+.info-block--legal {
+  max-width: 44rem;
+}
+
+.info-block--legal p {
+  font-size: 0.94rem;
+}
+
+.info-block--contact p:last-child,
+.info-block--legal p:last-child {
+  margin-bottom: 0;
 }
 
 .site-footer {
@@ -765,13 +907,12 @@ img {
   }
 
   .section-link,
-  .artwork-item,
   .exhibition-item__summary {
     grid-template-columns: 1fr;
   }
 
-  .artwork-item__side {
-    justify-items: start;
+  .artwork-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -814,6 +955,14 @@ img {
 
   .exhibition-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .artwork-list {
+    grid-template-columns: 1fr;
+  }
+
+  .artwork-card__overlay {
+    opacity: 1;
   }
 
   .speech-bubble,

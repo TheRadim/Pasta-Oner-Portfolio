@@ -118,16 +118,21 @@
     list.innerHTML = content.artworks.items
       .map(
         (item) => `
-          <article class="artwork-item">
-            <div class="artwork-item__year">${escapeHtml(item.year)}</div>
-            <div class="artwork-item__main">
-              <h2 class="artwork-item__title">${escapeHtml(item.title)}</h2>
-              ${item.medium ? `<p class="artwork-item__medium">${escapeHtml(item.medium)}</p>` : ""}
-              ${item.note ? `<p class="artwork-item__note">${escapeHtml(item.note)}</p>` : ""}
+          <article class="artwork-card">
+            <div class="artwork-card__image">
+              <img src="${item.image}" alt="${escapeHtml(item.alt || item.title)}">
             </div>
-            <div class="artwork-item__side">
-              ${item.status ? `<span class="status-pill">${escapeHtml(item.status)}</span>` : ""}
-              ${item.ctaHref && item.ctaLabel ? buildLink(item.ctaHref, item.ctaLabel) : ""}
+            <div class="artwork-card__overlay">
+              <div class="artwork-card__meta">
+                <span class="artwork-card__index">${escapeHtml(item.year)}</span>
+                ${item.status ? `<span class="status-pill">${escapeHtml(item.status)}</span>` : ""}
+              </div>
+              <div class="artwork-card__copy">
+                <h2 class="artwork-card__title">${escapeHtml(item.title)}</h2>
+                ${item.medium ? `<p class="artwork-card__medium">${escapeHtml(item.medium)}</p>` : ""}
+                ${item.note ? `<p class="artwork-card__note">${escapeHtml(item.note)}</p>` : ""}
+              </div>
+              ${item.ctaHref && item.ctaLabel ? buildLink(item.ctaHref, item.ctaLabel, "artwork-card__link") : ""}
             </div>
           </article>
         `
@@ -247,11 +252,9 @@
   }
 
   function renderBio(language) {
-    const title = document.querySelector("[data-bio-title]");
     const copy = document.querySelector("[data-bio-copy]");
-    if (!title || !copy) return;
+    if (!copy) return;
 
-    title.textContent = content.about.title;
     copy.innerHTML = content.about[language]
       .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
       .join("");
@@ -267,23 +270,9 @@
     const page = content.pages.about;
     setText("[data-about-kicker]", page.kicker);
     setText("[data-about-title]", page.title);
-    setText("[data-about-copy]", page.copy);
     setText("[data-about-interview-title]", content.interviewTeaser.title);
     setText("[data-about-interview-copy]", content.interviewTeaser.text);
     renderBio("cs");
-
-    const list = document.querySelector("[data-about-points]");
-    if (list) {
-      list.innerHTML = content.practicePoints
-        .map(
-          (point) => `
-            <article class="practice-item">
-              <p>${escapeHtml(point)}</p>
-            </article>
-          `
-        )
-        .join("");
-    }
   }
 
   function renderContactPage() {
@@ -292,17 +281,21 @@
     const page = content.pages.contact;
     setText("[data-contact-kicker]", page.kicker);
     setText("[data-contact-title]", page.title);
-    setText("[data-contact-copy]", page.copy);
+    const contactCopy = document.querySelector("[data-contact-copy]");
+    if (contactCopy) {
+      contactCopy.innerHTML = `
+        <p>${escapeHtml(content.contact.csIntro)}</p>
+        <p>${escapeHtml(content.contact.enIntro)}</p>
+      `;
+    }
 
     const primary = document.querySelector("[data-contact-primary]");
     if (primary) {
       primary.innerHTML = `
-        <span class="section-kicker">Primary</span>
+        <span class="section-kicker">Direct contact</span>
         <h2 class="info-block__title">Email & phone</h2>
         <p>${buildLink(`mailto:${content.contact.email}`, content.contact.email, "info-link")}</p>
         <p>${buildLink(content.contact.phoneHref, content.contact.phoneDisplay, "info-link")}</p>
-        <p>${escapeHtml(content.contact.csIntro)}</p>
-        <p>${escapeHtml(content.contact.enIntro)}</p>
       `;
     }
 
@@ -320,8 +313,8 @@
     const legal = document.querySelector("[data-contact-legal]");
     if (legal) {
       legal.innerHTML = `
-        <span class="section-kicker">Source note</span>
-        <h2 class="info-block__title">Preserved legal information</h2>
+        <span class="section-kicker">Legal</span>
+        <h2 class="info-block__title">Emerging Art a.s.</h2>
         ${content.contact.legal.map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
       `;
     }

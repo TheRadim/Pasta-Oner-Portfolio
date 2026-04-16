@@ -49,18 +49,20 @@
     </header>
 
     <main class="page-main">
-      <section class="section-line">
-        <span class="section-kicker" data-contact-kicker></span>
-        <h1 class="display-title" data-contact-title></h1>
-        <p class="lead-copy" data-contact-copy></p>
+      <section class="contact-layout section-line">
+        <div class="contact-layout__copy">
+          <span class="section-kicker" data-contact-kicker></span>
+          <h1 class="display-title" data-contact-title></h1>
+          <div class="lead-copy lead-copy--contact" data-contact-copy></div>
+        </div>
+        <div class="contact-stack">
+          <div class="info-block info-block--contact" data-contact-primary></div>
+          <div class="info-block info-block--contact" data-contact-social></div>
+        </div>
       </section>
 
-      <section class="section-line">
-        <div class="info-grid">
-          <div class="info-block" data-contact-primary></div>
-          <div class="info-block" data-contact-social></div>
-          <div class="info-block" data-contact-legal></div>
-        </div>
+      <section class="section-line contact-legal-section">
+        <div class="info-block info-block--legal" data-contact-legal></div>
       </section>
     </main>
 

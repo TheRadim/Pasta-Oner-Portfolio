@@ -50,33 +50,20 @@
 
     <main class="page-main">
       <section class="about-layout section-line">
-        <div>
+        <div class="about-layout__copy">
           <span class="section-kicker" data-about-kicker></span>
           <h1 class="display-title" data-about-title></h1>
-          <p class="lead-copy" data-about-copy></p>
+          <div class="language-switch" role="tablist" aria-label="Biography language">
+            <button class="language-switch__button is-active" type="button" data-lang-toggle="cs">CZ</button>
+            <button class="language-switch__button" type="button" data-lang-toggle="en">EN</button>
+          </div>
+          <div class="body-copy bio-copy" data-bio-copy></div>
         </div>
-        <aside class="media-panel">
+        <aside class="media-panel media-panel--portrait">
           <div class="media-panel__image">
             <img src="assets/pasta_portrait.png" alt="Pasta Oner portrait">
           </div>
         </aside>
-      </section>
-
-      <section class="section-line">
-        <div class="language-switch" role="tablist" aria-label="Biography language">
-          <button class="language-switch__button is-active" type="button" data-lang-toggle="cs">CZ</button>
-          <button class="language-switch__button" type="button" data-lang-toggle="en">EN</button>
-        </div>
-        <h2 class="section-title" data-bio-title></h2>
-        <div class="body-copy bio-copy" data-bio-copy></div>
-      </section>
-
-      <section class="section-line">
-        <div class="section-heading">
-          <span class="section-kicker">Practice</span>
-          <h2 class="section-title">Core lines inside the work.</h2>
-        </div>
-        <div class="practice-list" data-about-points></div>
       </section>
 
       <section class="section-line interview-teaser">
