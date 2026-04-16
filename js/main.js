@@ -81,10 +81,6 @@
     setText("[data-home-title]", content.home.title);
     setText("[data-home-copy]", content.home.copy);
     setText("[data-home-note]", content.home.note);
-    setText("[data-home-current-title]", content.currentExhibition.title);
-    setText("[data-home-current-dates]", content.currentExhibition.dates);
-    setText("[data-home-current-venue]", content.currentExhibition.venue);
-    setText("[data-home-current-copy]", content.currentExhibition.blurb);
 
     const links = document.querySelector("[data-home-links]");
     if (!links) return;
