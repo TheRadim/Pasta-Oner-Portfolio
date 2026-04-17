@@ -15,14 +15,8 @@ The redesign uses the top-level public pages from `https://www.pastaoner.cz/` as
 
 ## Raw crawl artifacts
 
-These pages were saved locally into `.crawl/raw/`:
-
-- `.crawl/raw/index.html`
-- `.crawl/raw/selected-works.html`
-- `.crawl/raw/exhibitions.html`
-- `.crawl/raw/about.html`
-- `.crawl/raw/interview-219.html`
-- `.crawl/raw/contact.html`
+Raw HTML snapshots were used only during the initial crawl and are not required by
+the public site. The live build uses the structured content model in `js/content.js`.
 
 ## Structured extraction used by the new site
 
