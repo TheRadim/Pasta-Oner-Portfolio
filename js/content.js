@@ -14,6 +14,7 @@ window.PASTA_CONTENT = {
   ui: {
     menu_open: { cs: "Menu", en: "Menu" },
     menu_close: { cs: "Zavřít", en: "Close" },
+    language_switch: { cs: "Jazyk", en: "Language" },
     menu_intro: {
       cs: "Minimalistický archiv děl, výstav, textů a přímého kontaktu.",
       en: "A minimal archive of artworks, exhibitions, writing, and direct contact."
@@ -32,8 +33,11 @@ window.PASTA_CONTENT = {
       en: "For more available works, current exhibition information, or collaboration requests, use the direct contact page."
     },
     home_contact_link: { cs: "Otevřít kontakt", en: "Open contact" },
-    home_structure_kicker: { cs: "Rozcestník", en: "Browse" },
-    home_structure_title: { cs: "Vyberte si cestu do archivu.", en: "Choose a way into the archive." },
+    home_structure_kicker: { cs: "Sekce", en: "Sections" },
+    home_structure_title: {
+      cs: "Otevřete díla, výstavy, profil autora nebo přímý kontakt.",
+      en: "Open artworks, exhibitions, the artist profile, or direct contact."
+    },
     works_grid_kicker: { cs: "Dostupná díla", en: "Availability" },
     works_grid_title: {
       cs: "Prostorové objekty, plastiky, instalace, grafické listy a netradiční inovativní techniky.",
@@ -60,7 +64,7 @@ window.PASTA_CONTENT = {
     view_details: { cs: "Detail", en: "View details" },
     open: { cs: "Otevřít", en: "Open" },
     available_selection: { cs: "Otevřít výběr", en: "Open selection" },
-    back_to_artworks: { cs: "Zpět na díla", en: "Back to artworks" }
+    back_to_artworks: { cs: "Zpět na kategorie", en: "Back to categories" }
   },
   home: {
     kicker: { cs: "Pasta Oner / český umělec", en: "Pasta Oner / Czech artist" },
@@ -110,7 +114,10 @@ window.PASTA_CONTENT = {
     image: "assets/currentexibit.jpg",
     alt: "Usual Suspect poster for Pasta Oner at Letiště Praha",
     blurb: "",
-    note: ""
+    note: {
+      cs: "Aktuálně k vidění v prostoru Letiště Praha.",
+      en: "Currently on view at Prague Airport."
+    }
   },
   pages: {
     works: {
@@ -219,6 +226,7 @@ window.PASTA_CONTENT = {
     items: [
       {
         year: "01",
+        category: "painting",
         title: { cs: "Akrylová malba", en: "Acrylic painting" },
         medium: {
           cs: "Středobodem Pastovy tvorby je akrylová malba.",
@@ -233,6 +241,7 @@ window.PASTA_CONTENT = {
       },
       {
         year: "02",
+        category: "painting",
         title: { cs: "Závěsné obrazy", en: "Hanging paintings" },
         medium: { cs: "Vytváření závěsných obrazů.", en: "The creation of hanging paintings." },
         status: { cs: "Aktuální nabídka", en: "Current offer" },
@@ -244,6 +253,7 @@ window.PASTA_CONTENT = {
       },
       {
         year: "03",
+        category: "object",
         title: { cs: "Prostorové objekty", en: "Spatial objects" },
         medium: { cs: "Navrhování prostorových objektů.", en: "The design of spatial objects." },
         status: { cs: "Aktuální nabídka", en: "Current offer" },
@@ -255,6 +265,7 @@ window.PASTA_CONTENT = {
       },
       {
         year: "04",
+        category: "sculpture",
         title: { cs: "Plastiky", en: "Sculptures" },
         medium: { cs: "Plastiky.", en: "Sculptures." },
         status: { cs: "Aktuální nabídka", en: "Current offer" },
@@ -266,6 +277,7 @@ window.PASTA_CONTENT = {
       },
       {
         year: "05",
+        category: "installation",
         title: { cs: "Instalace", en: "Installations" },
         medium: { cs: "Instalace.", en: "Installations." },
         status: { cs: "Aktuální nabídka", en: "Current offer" },
@@ -277,6 +289,7 @@ window.PASTA_CONTENT = {
       },
       {
         year: "06",
+        category: "graphic",
         title: { cs: "Grafické listy", en: "Graphics" },
         medium: {
           cs: "Grafické listy a netradiční inovativní techniky.",
@@ -300,6 +313,7 @@ window.PASTA_CONTENT = {
       items: [
         {
           code: "PO-01",
+          category: "painting",
           title: { cs: "Studio Figure I", en: "Studio Figure I" },
           type: { cs: "Akryl na plátně", en: "Acrylic on canvas" },
           size: "120 x 90 cm",
@@ -308,6 +322,7 @@ window.PASTA_CONTENT = {
         },
         {
           code: "PO-02",
+          category: "painting",
           title: { cs: "Golden Frame Study", en: "Golden Frame Study" },
           type: { cs: "Závěsný obraz", en: "Hanging painting" },
           size: "100 x 80 cm",
@@ -316,6 +331,7 @@ window.PASTA_CONTENT = {
         },
         {
           code: "PO-03",
+          category: "object",
           title: { cs: "Icon Object", en: "Icon Object" },
           type: { cs: "Prostorový objekt", en: "Spatial object" },
           size: "60 x 45 x 30 cm",
@@ -324,6 +340,7 @@ window.PASTA_CONTENT = {
         },
         {
           code: "PO-04",
+          category: "sculpture",
           title: { cs: "David Variation", en: "David Variation" },
           type: { cs: "Plastika", en: "Sculpture" },
           size: "80 x 35 x 28 cm",
@@ -332,6 +349,7 @@ window.PASTA_CONTENT = {
         },
         {
           code: "PO-05",
+          category: "installation",
           title: { cs: "Transit Piece", en: "Transit Piece" },
           type: { cs: "Instalace", en: "Installation" },
           size: "Variable dimensions",
@@ -340,6 +358,7 @@ window.PASTA_CONTENT = {
         },
         {
           code: "PO-06",
+          category: "graphic",
           title: { cs: "Graphic Sheet I", en: "Graphic Sheet I" },
           type: { cs: "Grafický list", en: "Graphic sheet" },
           size: "70 x 50 cm",

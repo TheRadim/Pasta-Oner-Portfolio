@@ -76,7 +76,6 @@ select {
 .site-header__actions {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 0.9rem;
 }
@@ -186,6 +185,8 @@ select {
 .menu-panel__body {
   display: grid;
   gap: 2rem;
+  align-content: start;
+  flex: 1 1 auto;
 }
 
 .menu-panel__intro {
@@ -194,6 +195,14 @@ select {
   color: var(--text-soft);
   font-size: 0.95rem;
   line-height: 1.9;
+}
+
+.menu-panel__tools {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
 }
 
 .menu-backdrop {
@@ -275,11 +284,7 @@ body.menu-open .menu-toggle__icon::after {
 
 .menu-link__hand {
   position: absolute;
-  left: 3.2rem;
-  top: calc(100% - 0.65rem);
-  width: 46px;
   opacity: 0;
-  transform: translate(-50%, 16px) rotate(-8deg);
   pointer-events: none;
   transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
 }
@@ -289,17 +294,24 @@ body.menu-open .menu-toggle__icon::after {
   height: auto;
 }
 
-.menu-link__hand--alt {
-  left: auto;
-  right: -0.25rem;
-  top: 0.1rem;
-  width: 40px;
-  transform: translate(16px, -10px) rotate(12deg);
+.menu-link__hand--hover {
+  left: 3.15rem;
+  top: calc(100% - 0.6rem);
+  width: 42px;
+  transform: translate(-54%, 14px) rotate(-8deg);
 }
 
-.menu-link:hover .menu-link__hand,
-.menu-link:focus-visible .menu-link__hand,
-.menu-link.active .menu-link__hand {
+.menu-link__hand--current {
+  left: auto;
+  right: -0.12rem;
+  top: 0.16rem;
+  width: 38px;
+  transform: translate(13px, -9px) rotate(11deg);
+}
+
+.menu-link:not(.active):hover .menu-link__hand--hover,
+.menu-link:not(.active):focus-visible .menu-link__hand--hover,
+.menu-link.active .menu-link__hand--current {
   opacity: 1;
   transform: translate(0, 0) rotate(0deg);
 }
@@ -327,6 +339,10 @@ body.menu-open .menu-toggle__icon::after {
 .section-line {
   padding-top: 0;
   border-top: 0;
+}
+
+.page-intro--single {
+  grid-template-columns: 1fr;
 }
 
 .landing-grid,
@@ -434,6 +450,27 @@ body.menu-open .menu-toggle__icon::after {
   max-width: 50rem;
   margin-bottom: 0;
   font-size: 0.93rem;
+}
+
+.available-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.available-toolbar__heading {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.available-toolbar__heading .section-kicker {
+  margin-bottom: 0;
+}
+
+.available-toolbar__actions {
+  display: flex;
+  align-items: center;
 }
 
 .hero-actions,
@@ -643,6 +680,11 @@ body.menu-open .menu-toggle__icon::after {
     border-color 220ms ease;
 }
 
+.artwork-card--link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .artwork-card:hover,
 .artwork-card:focus-within {
   transform: translateY(-4px);
@@ -783,20 +825,51 @@ body.menu-open .menu-toggle__icon::after {
   text-transform: uppercase;
 }
 
-.current-exhibition-meta {
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.2rem;
+.current-exhibition-spotlight {
+  padding: clamp(1.5rem, 4vw, 2.8rem);
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(241, 212, 75, 0.16), rgba(255, 255, 255, 0) 48%),
+    var(--surface);
 }
 
-.current-exhibition-copy {
+.current-exhibition-spotlight__inner {
   display: grid;
-  gap: 0.65rem;
-  max-width: 32rem;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.58fr);
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: center;
 }
 
-.current-exhibition-copy .section-title {
-  margin-bottom: 0;
+.current-exhibition-spotlight__copy {
+  display: grid;
+  gap: 0.55rem;
+  align-content: center;
+}
+
+.current-exhibition-spotlight__copy .section-kicker {
+  margin-bottom: 0.2rem;
+}
+
+.current-exhibition-spotlight__title {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 4.6vw, 4.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.current-exhibition-spotlight__poster {
+  width: 100%;
+  max-width: 380px;
+  justify-self: end;
+}
+
+.current-exhibition-spotlight__poster img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  box-shadow: var(--shadow);
 }
 
 .exhibitions-stack {
@@ -967,7 +1040,7 @@ body.menu-open .menu-toggle__icon::after {
   margin: 0 0 1.6rem;
 }
 
-.language-switch--global {
+.language-switch--menu {
   margin: 0;
 }
 
@@ -1090,9 +1163,9 @@ body.menu-open .menu-toggle__icon::after {
 
 .contact-stack {
   display: grid;
-  gap: 1.5rem;
+  gap: 2.35rem;
   align-content: start;
-  max-width: 21rem;
+  max-width: 18rem;
   justify-self: end;
 }
 
@@ -1118,9 +1191,27 @@ body.menu-open .menu-toggle__icon::after {
   margin-bottom: 0.25rem;
 }
 
+[data-page="contact"] .info-block {
+  gap: 0.5rem;
+}
+
+[data-page="contact"] .info-block__title {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+}
+
+[data-page="contact"] .contact-stack .section-kicker {
+  margin-bottom: 0.15rem;
+}
+
+[data-page="contact"] .contact-stack p,
+[data-page="contact"] .contact-stack a {
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
 .stack-links {
   display: grid;
-  gap: 0.4rem;
+  gap: 0.55rem;
 }
 
 .site-footer {
@@ -1143,19 +1234,21 @@ body.menu-open .menu-toggle__icon::after {
   line-height: 1.8;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 980px) {
   .landing-grid,
   .page-intro,
   .about-layout,
   .contact-layout,
   .landing-info,
-  .archive-columns {
+  .archive-columns,
+  .current-exhibition-spotlight__inner {
     grid-template-columns: 1fr;
   }
 
   .poster-panel,
   .media-panel,
-  .contact-stack {
+  .contact-stack,
+  .current-exhibition-spotlight__poster {
     max-width: none;
     justify-self: stretch;
   }
@@ -1190,6 +1283,11 @@ body.menu-open .menu-toggle__icon::after {
   .menu-panel {
     width: min(78vw, 460px);
   }
+
+  .available-toolbar {
+    display: grid;
+    justify-content: stretch;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1202,6 +1300,10 @@ body.menu-open .menu-toggle__icon::after {
     min-width: 0;
   }
 
+  .menu-panel__tools {
+    gap: 0.8rem;
+  }
+
   .display-title {
     max-width: none;
     font-size: clamp(2rem, 10vw, 3rem);
@@ -1211,7 +1313,7 @@ body.menu-open .menu-toggle__icon::after {
     gap: 0.55rem;
   }
 
-  .language-switch--global .language-switch__button {
+  .language-switch__button {
     padding-inline: 0.72rem;
   }
 
@@ -1234,7 +1336,8 @@ body.menu-open .menu-toggle__icon::after {
   }
 
   .menu-link__hand,
-  .menu-link__hand--alt {
+  .menu-link__hand--hover,
+  .menu-link__hand--current {
     display: none;
   }
 
@@ -1256,6 +1359,14 @@ body.menu-open .menu-toggle__icon::after {
 
   .speech-bubble {
     width: 100%;
+  }
+
+  .current-exhibition-spotlight {
+    padding: 1.25rem;
+  }
+
+  .current-exhibition-spotlight__title {
+    font-size: clamp(2rem, 10vw, 3rem);
   }
 
   .site-footer__inner,

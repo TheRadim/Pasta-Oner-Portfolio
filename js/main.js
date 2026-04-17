@@ -65,15 +65,17 @@
       .map((item, index) => {
         const activeClass = isActiveNavItem(item.id) ? " active" : "";
         const current = isActiveNavItem(item.id) ? ' aria-current="page"' : "";
-        const handClass = item.hand.includes("handleftdown") ? " menu-link__hand--alt" : "";
 
         return `
           <li class="site-nav__item">
             <a class="menu-link${activeClass}" href="${item.href}"${current}>
               <span class="menu-link__index">${String(index + 1).padStart(2, "0")}</span>
               <span class="menu-link__label">${escapeHtml(localize(item.label))}</span>
-              <span class="menu-link__hand${handClass}" aria-hidden="true">
-                <img src="${item.hand}" alt="">
+              <span class="menu-link__hand menu-link__hand--hover" aria-hidden="true">
+                <img src="assets/hand.png" alt="">
+              </span>
+              <span class="menu-link__hand menu-link__hand--current" aria-hidden="true">
+                <img src="assets/handleftdown.png" alt="">
               </span>
             </a>
           </li>
@@ -155,8 +157,13 @@
 
     list.innerHTML = content.artworks.items
       .map(
-        (item) => `
-          <article class="artwork-card">
+        (item) => {
+          const targetHref = item.ctaHref
+            ? `${item.ctaHref}${item.category ? `?category=${encodeURIComponent(item.category)}` : ""}#available-grid`
+            : "";
+
+          return `
+          <a class="artwork-card artwork-card--link" href="${targetHref}">
             <div class="artwork-card__image">
               <img src="${item.image}" alt="${escapeHtml(localize(item.alt || item.title))}">
             </div>
@@ -168,10 +175,11 @@
               <h2 class="artwork-card__title">${escapeHtml(localize(item.title))}</h2>
               ${item.medium ? `<p class="artwork-card__medium">${escapeHtml(localize(item.medium))}</p>` : ""}
               ${item.note ? `<p class="artwork-card__note">${escapeHtml(localize(item.note))}</p>` : ""}
-              ${item.ctaHref && item.ctaLabel ? buildLink(item.ctaHref, item.ctaLabel, "artwork-card__link") : ""}
+              ${item.ctaLabel ? `<span class="artwork-card__link">${escapeHtml(localize(item.ctaLabel))}</span>` : ""}
             </div>
-          </article>
-        `
+          </a>
+        `;
+        }
       )
       .join("");
   }
@@ -180,14 +188,22 @@
     if (!document.querySelector("[data-available-title]")) return;
 
     const selection = content.artworks.selection;
-    setLocalizedText("[data-available-kicker]", selection.kicker);
-    setLocalizedText("[data-available-title]", selection.title);
-    setLocalizedText("[data-available-copy]", selection.copy);
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const currentCategory = content.artworks.items.find((item) => item.category === category);
+    const filteredItems = currentCategory
+      ? selection.items.filter((item) => item.category === category)
+      : selection.items;
+    const items = filteredItems.length ? filteredItems : selection.items;
+
+    setLocalizedText("[data-available-kicker]", currentCategory ? "" : selection.kicker);
+    setLocalizedText("[data-available-title]", currentCategory ? currentCategory.title : selection.title);
+    setLocalizedText("[data-available-copy]", currentCategory ? "" : selection.copy);
 
     const grid = document.querySelector("[data-available-grid]");
     if (!grid) return;
 
-    grid.innerHTML = selection.items
+    grid.innerHTML = items
       .map(
         (item) => `
           <article class="available-card">
@@ -242,6 +258,7 @@
     const featured = document.querySelector("[data-exhibitions-featured]");
     if (featured) {
       featured.innerHTML = content.featuredExhibitions
+        .filter((item) => localize(item.status, "en") !== "Current")
         .map(
           (item) => `
             <details class="exhibition-item">

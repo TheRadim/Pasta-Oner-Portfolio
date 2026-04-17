@@ -30,10 +30,6 @@
           <img src="assets/logo.png" alt="Pasta Oner logo">
         </a>
         <div class="site-header__actions">
-          <div class="language-switch language-switch--global" role="group" aria-label="Language switch">
-            <button class="language-switch__button" type="button" data-set-lang="cs">CZ</button>
-            <button class="language-switch__button" type="button" data-set-lang="en">EN</button>
-          </div>
           <button class="menu-toggle" type="button" data-menu-toggle aria-controls="siteNavPanel" aria-expanded="false">
             <span class="menu-toggle__label" data-ui="menu_open">Menu</span>
             <span class="menu-toggle__icon" aria-hidden="true"></span>
@@ -48,24 +44,27 @@
         <div class="menu-panel__body">
           <p class="menu-panel__intro" data-ui="menu_intro">A minimal archive of artworks, exhibitions, writing, and direct contact.</p>
           <ul class="site-nav" data-site-nav></ul>
+          <div class="menu-panel__tools">
+            <span class="menu-panel__eyebrow" data-ui="language_switch">Language</span>
+            <div class="language-switch language-switch--menu" role="group" aria-label="Language switch">
+              <button class="language-switch__button" type="button" data-set-lang="cs">CZ</button>
+              <button class="language-switch__button" type="button" data-set-lang="en">EN</button>
+            </div>
+          </div>
         </div>
       </div>
       <button class="menu-backdrop" type="button" data-menu-close tabindex="-1" aria-hidden="true"></button>
     </header>
 
     <main class="page-main">
-      <section class="page-intro section-line">
-        <div class="page-intro__copy">
+      <section class="available-toolbar section-line">
+        <div class="available-toolbar__heading">
           <span class="section-kicker" data-available-kicker></span>
-          <h1 class="display-title" data-available-title></h1>
-          <p class="lead-copy" data-available-copy></p>
+          <h1 class="section-title" data-available-title></h1>
+        </div>
+        <div class="available-toolbar__actions">
           <a class="text-link" href="works.html" data-ui="back_to_artworks">Back to artworks</a>
         </div>
-        <aside class="media-panel media-panel--hero">
-          <div class="media-panel__image">
-            <img src="assets/art.jpeg" alt="Pasta Oner current selection image">
-          </div>
-        </aside>
       </section>
 
       <section class="section-line">
