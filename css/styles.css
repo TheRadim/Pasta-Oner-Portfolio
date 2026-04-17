@@ -41,7 +41,7 @@
   --panel-shadow: 4px 4px 0 rgba(0, 0, 0, 0.22);
   --panel-shadow-hover: 6px 6px 0 rgba(0, 0, 0, 0.32);
   --logo-filter: invert(1) brightness(1.02);
-  --hand-filter: invert(1) brightness(1.02);
+  --hand-filter: none;
 }
 
 *,
