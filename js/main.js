@@ -1,8 +1,10 @@
 (function () {
   const content = window.PASTA_CONTENT;
   const pageId = document.body.dataset.page;
-  const STORAGE_KEY = "pastaoner-language";
-  let currentLang = window.localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "cs";
+  const LANGUAGE_STORAGE_KEY = "pastaoner-language";
+  const THEME_STORAGE_KEY = "pastaoner-theme";
+  let currentLang = window.localStorage.getItem(LANGUAGE_STORAGE_KEY) === "en" ? "en" : "cs";
+  let currentTheme = window.localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
 
   function escapeHtml(value) {
     return String(value)
@@ -394,23 +396,48 @@
     });
   }
 
+  function applyTheme() {
+    document.documentElement.dataset.theme = currentTheme;
+    document.documentElement.style.colorScheme = currentTheme === "dark" ? "dark" : "light";
+  }
+
+  function syncThemeButtons() {
+    document.querySelectorAll("[data-set-theme]").forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.setTheme === currentTheme);
+    });
+  }
+
   function renderPage() {
     renderUiText();
     renderSiteNav();
     renderFooter();
     initPage();
     syncLanguageButtons();
+    syncThemeButtons();
   }
 
   function setLanguage(language) {
     currentLang = language === "en" ? "en" : "cs";
-    window.localStorage.setItem(STORAGE_KEY, currentLang);
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLang);
     renderPage();
+  }
+
+  function setTheme(theme) {
+    currentTheme = theme === "dark" ? "dark" : "light";
+    window.localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
+    applyTheme();
+    syncThemeButtons();
   }
 
   function setupLanguageSwitch() {
     document.querySelectorAll("[data-set-lang]").forEach((button) => {
       button.addEventListener("click", () => setLanguage(button.dataset.setLang));
+    });
+  }
+
+  function setupThemeSwitch() {
+    document.querySelectorAll("[data-set-theme]").forEach((button) => {
+      button.addEventListener("click", () => setTheme(button.dataset.setTheme));
     });
   }
 
@@ -462,7 +489,9 @@
     renderContactPage();
   }
 
+  applyTheme();
   renderPage();
   setupLanguageSwitch();
+  setupThemeSwitch();
   setupMenu();
 })();

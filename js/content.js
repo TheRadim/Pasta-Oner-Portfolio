@@ -15,6 +15,9 @@ window.PASTA_CONTENT = {
     menu_open: { cs: "Menu", en: "Menu" },
     menu_close: { cs: "Zavřít", en: "Close" },
     language_switch: { cs: "Jazyk", en: "Language" },
+    theme_switch: { cs: "Režim", en: "Theme" },
+    theme_light: { cs: "Světlý", en: "Light" },
+    theme_dark: { cs: "Tmavý", en: "Dark" },
     menu_intro: {
       cs: "Minimalistický archiv děl, výstav, textů a přímého kontaktu.",
       en: "A minimal archive of artworks, exhibitions, writing, and direct contact."
