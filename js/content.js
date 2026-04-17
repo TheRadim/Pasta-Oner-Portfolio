@@ -383,7 +383,7 @@ window.PASTA_CONTENT = {
       linkHref: "contact.html"
     },
     {
-      status: { cs: "Nedavna", en: "Recent" },
+      status: { cs: "Nedávná", en: "Recent" },
       title: "Ermitage",
       venue: "Obecní dům, Prague",
       dates: "17. 9. - 31. 12. 2025",
@@ -396,7 +396,7 @@ window.PASTA_CONTENT = {
       linkHref: "https://www.pastaoner.cz/ermitage"
     },
     {
-      status: { cs: "Nedavna", en: "Recent" },
+      status: { cs: "Nedávná", en: "Recent" },
       title: "Holy Grail",
       venue: "Hauch Gallery, Prague",
       dates: "24. 5. - 15. 6. 2024",

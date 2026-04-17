@@ -90,7 +90,7 @@
 
     footer.innerHTML = `
       <div class="site-footer__inner">
-        ${content.site.footerNote ? `<p>${escapeHtml(localize(content.site.footerNote))}</p>` : ""}
+        <a class="site-footer__email" href="mailto:${content.contact.email}">${escapeHtml(content.contact.email)}</a>
         <div class="site-footer__links">
           ${content.contact.social
             .map((item) => buildLink(item.href, item.label))
@@ -129,14 +129,11 @@
 
     links.innerHTML = content.home.links
       .map(
-        (item) => `
-          <a class="section-link" href="${item.href}">
-            <span class="section-link__index">${escapeHtml(item.index)}</span>
-            <div class="section-link__content">
-              <h2 class="section-link__title">${escapeHtml(localize(item.title))}</h2>
-              ${item.text ? `<p class="section-link__text">${escapeHtml(localize(item.text))}</p>` : ""}
-            </div>
-            <span class="section-link__arrow">${escapeHtml(t("open"))}</span>
+        (item, index) => `
+          <a class="home-route home-route--tone-${(index % 4) + 1}" href="${item.href}">
+            <span class="home-route__index">${escapeHtml(item.index)}</span>
+            <span class="home-route__title">${escapeHtml(localize(item.title))}</span>
+            <span class="home-route__cta">${escapeHtml(t("open"))}</span>
           </a>
         `
       )
@@ -174,7 +171,6 @@
               </div>
               <h2 class="artwork-card__title">${escapeHtml(localize(item.title))}</h2>
               ${item.medium ? `<p class="artwork-card__medium">${escapeHtml(localize(item.medium))}</p>` : ""}
-              ${item.note ? `<p class="artwork-card__note">${escapeHtml(localize(item.note))}</p>` : ""}
               ${item.ctaLabel ? `<span class="artwork-card__link">${escapeHtml(localize(item.ctaLabel))}</span>` : ""}
             </div>
           </a>
@@ -244,7 +240,7 @@
   }
 
   function renderExhibitionsPage() {
-    if (!document.querySelector("[data-exhibitions-title]")) return;
+    if (!document.querySelector("[data-exhibitions-featured]")) return;
 
     const page = content.pages.exhibitions;
     setLocalizedText("[data-exhibitions-kicker]", page.kicker);
@@ -365,36 +361,28 @@
     setLocalizedText("[data-contact-title]", page.title);
     const contactCopy = document.querySelector("[data-contact-copy]");
     if (contactCopy) {
-      const intro = localize(content.contact.intro);
-      contactCopy.innerHTML = intro.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
+      contactCopy.innerHTML = "";
+      contactCopy.hidden = true;
     }
 
     const primary = document.querySelector("[data-contact-primary]");
     if (primary) {
       primary.innerHTML = `
         <span class="section-kicker">${escapeHtml(t("direct_contact"))}</span>
-        <h2 class="info-block__title">${escapeHtml(t("email_phone"))}</h2>
-        <p>${buildLink(`mailto:${content.contact.email}`, content.contact.email, "info-link")}</p>
         <p>${buildLink(content.contact.phoneHref, content.contact.phoneDisplay, "info-link")}</p>
       `;
     }
 
     const social = document.querySelector("[data-contact-social]");
     if (social) {
-      social.innerHTML = `
-        <span class="section-kicker">${escapeHtml(t("social"))}</span>
-        <h2 class="info-block__title">${escapeHtml(t("facebook_instagram"))}</h2>
-        <div class="stack-links">
-          ${content.contact.social.map((item) => buildLink(item.href, item.label, "info-link")).join("")}
-        </div>
-      `;
+      social.innerHTML = "";
     }
 
     const legal = document.querySelector("[data-contact-legal]");
     if (legal) {
       legal.innerHTML = `
         <span class="section-kicker">${escapeHtml(t("legal"))}</span>
-        <h2 class="info-block__title">Emerging Art a.s.</h2>
+        <h2 class="info-block__title info-block__title--legal">Emerging Art a.s.</h2>
         ${localize(content.contact.legal).map((line) => `<p>${escapeHtml(line)}</p>`).join("")}
       `;
     }

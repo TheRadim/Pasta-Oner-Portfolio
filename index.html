@@ -58,7 +58,10 @@
 
     <main class="page-main">
       <section class="landing-grid section-line">
-        <div>
+        <div class="landing-gesture" aria-hidden="true">
+          <img src="assets/hands.png" alt="">
+        </div>
+        <div class="landing-grid__copy">
           <span class="section-kicker" data-home-kicker></span>
           <h1 class="display-title" data-home-title></h1>
           <p class="lead-copy" data-home-copy></p>
@@ -71,33 +74,15 @@
         <aside class="poster-panel">
           <span class="section-kicker" data-ui="current_exhibition">Current exhibition</span>
           <div class="poster-panel__image">
-            <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
+            <a class="poster-panel__link" href="exhibitions.html" aria-label="Open exhibitions page">
+              <img src="assets/currentexibit.jpg" alt="Current exhibition poster">
+            </a>
           </div>
         </aside>
       </section>
 
-      <section class="section-line landing-info">
-        <div>
-          <span class="section-kicker" data-ui="home_offerings_kicker">Offerings</span>
-          <p class="body-copy">
-            <span data-ui="home_offerings_text">Current works, editions, exhibition information, and studio inquiries are handled directly.</span>
-          </p>
-        </div>
-        <div>
-          <span class="section-kicker" data-ui="home_contact_kicker">Contact note</span>
-          <p class="body-copy">
-            <span data-ui="home_contact_text">For more available works, current exhibition information, or collaboration requests, use the direct contact page.</span>
-          </p>
-          <a class="text-link" href="contact.html" data-ui="home_contact_link">Open contact</a>
-        </div>
-      </section>
-
-      <section class="section-line">
-        <div class="section-heading">
-          <span class="section-kicker" data-ui="home_structure_kicker">Structure</span>
-          <h2 class="section-title" data-ui="home_structure_title">A simple portfolio map with dedicated subpages.</h2>
-        </div>
-        <div class="section-links" data-home-links></div>
+      <section class="section-line home-directory">
+        <div class="home-route-list" data-home-links></div>
       </section>
     </main>
 
